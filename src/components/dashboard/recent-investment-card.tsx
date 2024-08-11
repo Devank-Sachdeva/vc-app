@@ -16,7 +16,6 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-// import { Badge } from "@/components/ui/badge";
 
 const investments = [
     {
@@ -58,7 +57,7 @@ function formatNumber(num: number): string {
 
 export function RecentInvestmentCard() {
     return (
-        <Card className="xl:col-span-2">
+        <Card>
             <CardHeader className="flex flex-row items-center">
                 <div className="grid gap-2">
                     <CardTitle>Investments</CardTitle>
