@@ -1,7 +1,9 @@
 const Startup = () => {
-    return (<div>
-
-    </div>)
+    return (
+        <div>
+            Hi
+        </div>
+    )
 }
 
 export default Startup;

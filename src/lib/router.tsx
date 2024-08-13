@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "@/App";
 import Auth from "@/pages/auth";
-import PrivateRoutes from "@/PrivateRoute";
+import PrivateRoutes from "@/lib/private-route";
 import Dashboard from "@/pages/dashboard";
 import Startup from "@/pages/startup";
 

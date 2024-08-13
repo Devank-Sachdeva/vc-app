@@ -27,13 +27,14 @@ const stats = [
 const Dashboard = () => {
     console.log();
     return (
-        <main className="flex flex-1 flex-col gap-4 p-5">
+        <div className="flex flex-1 flex-col gap-4 p-5">
             <div className="grid gap-8 grid-cols-4">
                 {stats.map((e) => (
                     <StatCard
                         title={e.title}
                         amount={e.amount}
                         description={e.description}
+                        key={e.title}
                     />
                 ))}
             </div>
@@ -45,7 +46,7 @@ const Dashboard = () => {
                     <RecentInvestmentCard />
                 </div>
             </div>
-        </main>
+        </div>
     );
 };
 
