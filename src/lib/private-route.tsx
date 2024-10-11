@@ -6,7 +6,6 @@ const PrivateRoutes = () => {
     return auth.includes("token=") ? (
         <>
             <Header />
-            
             <div className="max-h-[calc(100vh-64px)] overflow-hidden">
                 <Outlet />
             </div>
