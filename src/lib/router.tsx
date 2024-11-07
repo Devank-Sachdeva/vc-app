@@ -4,6 +4,8 @@ import Auth from "@/pages/auth";
 import PrivateRoutes from "@/lib/private-route";
 import Dashboard from "@/pages/dashboard";
 import Startup from "@/pages/startup";
+import Profile from "@/pages/profile";
+import Edit from "@/pages/edit-profile";
 
 
 const router = createBrowserRouter([
@@ -20,14 +22,22 @@ const router = createBrowserRouter([
         children: [
             {
                 path: "/dashboard",
-                element: <Dashboard />
+                element: <Dashboard />,
             },
             {
                 path: "/startups",
-                element: <Startup />
-            }
-        ]
-    }
+                element: <Startup />,
+            },
+            {
+                path: "/profile",
+                element: <Profile />,
+            },
+            {
+                path: "/edit",
+                element: <Edit />,
+            },
+        ],
+    },
 ]);
 
 

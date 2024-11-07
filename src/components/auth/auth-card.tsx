@@ -39,7 +39,10 @@ export const AuthCard = () => {
                             </Link>
                         </div>
                     </div>
-                    <Button type="submit" className="w-full">
+                    <Button type="submit" className="w-full" onClick={() => {
+                        document.cookie = "token=1"; 
+                        window.location.href = "/dashboard";
+                    }}>
                         Login
                     </Button>
                     <Button variant="outline" className="w-full">
