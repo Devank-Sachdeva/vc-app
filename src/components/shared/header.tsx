@@ -27,28 +27,37 @@ export const Header = () => {
                 </Link>
                 <Link
                     to="/dashboard"
-                    className={cn("transition-colors hover:text-foreground text-muted-foreground", {
-                        "font-semibold text-foreground":
-                            location.pathname === "/dashboard",
-                    })}
+                    className={cn(
+                        "transition-colors hover:text-foreground text-muted-foreground",
+                        {
+                            "font-semibold text-foreground":
+                                location.pathname === "/dashboard",
+                        }
+                    )}
                 >
                     Dashboard
                 </Link>
                 <Link
                     to="/startups"
-                    className={cn("transition-colors hover:text-foreground text-muted-foreground", {
-                        "font-semibold text-foreground":
-                            location.pathname === "/startups",
-                    })}
+                    className={cn(
+                        "transition-colors hover:text-foreground text-muted-foreground",
+                        {
+                            "font-semibold text-foreground":
+                                location.pathname === "/startups",
+                        }
+                    )}
                 >
                     Startups
                 </Link>
                 <Link
                     to="#"
-                    className={cn("transition-colors hover:text-foreground text-muted-foreground", {
-                        "font-semibold text-foreground":
-                            location.pathname === "/investments",
-                    })}
+                    className={cn(
+                        "transition-colors hover:text-foreground text-muted-foreground",
+                        {
+                            "font-semibold text-foreground":
+                                location.pathname === "/investments",
+                        }
+                    )}
                 >
                     Investments
                 </Link>
@@ -76,10 +85,22 @@ export const Header = () => {
                         </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
-                        <DropdownMenuItem onClick={() => navigate("/profile")}>My Profile</DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => navigate("/edit")}>Edit Profile</DropdownMenuItem>
+                        <DropdownMenuItem
+                            className="hover:cursor-pointer"
+                            onClick={() => navigate("/profile")}
+                        >
+                            My Profile
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
+                            className="hover:cursor-pointer"
+                            onClick={() => navigate("/edit")}
+                        >
+                            Edit Profile
+                        </DropdownMenuItem>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem>Logout</DropdownMenuItem>
+                        <DropdownMenuItem className="hover:cursor-pointer">
+                            Logout
+                        </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
             </div>
