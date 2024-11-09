@@ -10,6 +10,8 @@ import { LoginCard } from "@/components/auth/login-card";
 import RegisterCard from "@/components/auth/register-card";
 import SDashboard from "@/pages/startup/dashboard";
 import Investors from "@/pages/startup/investors";
+import Backers from "@/pages/startup/backers";
+import Investments from "@/pages/investor/investments";
 
 const router = createBrowserRouter([
     {
@@ -46,6 +48,10 @@ const router = createBrowserRouter([
                 element: <Startup />,
             },
             {
+                path: "/investor/investments",
+                element: <Investments />,
+            },
+            {
                 path: "/investor/profile",
                 element: <Profile />,
             },
@@ -69,6 +75,10 @@ const router = createBrowserRouter([
             {
                 path: "/startup/investors",
                 element: <Investors />,
+            },
+            {
+                path: "/startup/backers",
+                element: <Backers />,
             },
         ],
     },

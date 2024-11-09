@@ -50,7 +50,7 @@ export const Header = () => {
                     Investors
                 </Link>
                 <Link
-                    to="#"
+                    to="/startup/backers"
                     className={cn(
                         "transition-colors hover:text-foreground text-muted-foreground",
                         {

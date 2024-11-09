@@ -49,3 +49,18 @@ export enum StartupTags {
     Security = "Security",
     Analytics = "Analytics",
 }
+
+export enum InvestorTypes {
+    VentureCapitalist = "Venture capitalist",
+    Bank = "Bank",
+    Incubator = "Incubator",
+    ConservativeInvestors = "Conservative investors",
+    AngelInvestor = "Angel investor",
+    InstitutionalInvestors = "Institutional investors",
+    AggressiveInvestors = "Aggressive investors",
+    PassiveInvestors = "Passive investors",
+    PersonalInvestors = "Personal investors",
+    P2PLending = "P2P lending",
+    HedgeFund = "Hedge fund",
+    Traders = "Traders",
+}

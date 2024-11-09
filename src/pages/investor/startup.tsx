@@ -28,6 +28,7 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
+import { StartupTags } from "@/lib/utils";
 
 const startups = [
     {
@@ -71,7 +72,7 @@ const Startup = () => {
     });
 
     return (
-        <div className="flex flex-col min-h-screen">
+        <div className="flex flex-col overflow-y-auto">
             <main className="flex-1 p-4 md:p-6">
                 <div className="max-w-6xl mx-auto">
                     <div className="text-3xl font-bold">Startups</div>
@@ -83,7 +84,7 @@ const Startup = () => {
                             <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500" />
                             <Input
                                 className="pl-8"
-                                placeholder="Search investors or domains..."
+                                placeholder="Search startups or domains..."
                                 type="search"
                                 value={searchTerm}
                                 onChange={(e) => setSearchTerm(e.target.value)}
@@ -97,17 +98,12 @@ const Startup = () => {
                                     <ChevronDown className="ml-2 h-4 w-4" />
                                 </Button>
                             </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end" className="w-56">
+                            <DropdownMenuContent align="end" className="w-56 overflow-y-auto max-h-[300px]">
                                 <DropdownMenuLabel>
-                                    Investor Type
+                                    Startup Type
                                 </DropdownMenuLabel>
                                 <DropdownMenuSeparator />
-                                {[
-                                    "Venture Capital",
-                                    "Angel Group",
-                                    "Corporate Venture Capital",
-                                    "Accelerator",
-                                ].map((type) => (
+                                {Object.values(StartupTags).map((type) => (
                                     <DropdownMenuCheckboxItem
                                         key={type}
                                         checked={selectedTypes.includes(type)}
@@ -146,9 +142,7 @@ const Startup = () => {
                                         <TableCell className="font-medium">
                                             {startup.name}
                                         </TableCell>
-                                        <TableCell >
-                                            ${startup.sales}
-                                        </TableCell>
+                                        <TableCell>${startup.sales}</TableCell>
                                         <TableCell>
                                             ${startup.last_round_valuation}
                                         </TableCell>

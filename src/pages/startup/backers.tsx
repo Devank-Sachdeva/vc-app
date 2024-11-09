@@ -7,6 +7,7 @@ import {
     ChevronRight,
     Download,
     Filter,
+    
     Search,
     SortAsc,
     SortDesc,
@@ -31,171 +32,73 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import { cn } from "@/lib/utils";
 
-const startups = [
+const investors = [
     {
-        name: "Alpha Innovations",
-        stage: "Seed",
-        amount: 500000,
-        equity: 10,
-        date: new Date("2021-06-15"),
-        currentValuation: 2000000,
-        unrealizedReturn: 1500000, // 300% gain
-    },
-    {
-        name: "Beta Labs",
-        stage: "Series A",
-        amount: 1200000,
-        equity: 15,
-        date: new Date("2020-09-10"),
-        currentValuation: 3500000,
-        unrealizedReturn: 2300000, // 192% gain
-    },
-    {
-        name: "Gamma Technologies",
-        stage: "Pre-Seed",
-        amount: 100000,
-        equity: 8,
-        date: new Date("2022-01-20"),
-        currentValuation: 90000,
-        unrealizedReturn: -10000, // -10% loss
-    },
-    {
-        name: "Delta Robotics",
-        stage: "Later Stage",
-        amount: 5000000,
-        equity: 12,
-        date: new Date("2018-04-18"),
-        currentValuation: 12000000,
-        unrealizedReturn: 7000000, // 140% gain
-    },
-    {
-        name: "Epsilon Health",
-        stage: "Series B",
-        amount: 2000000,
-        equity: 18,
-        date: new Date("2021-11-02"),
-        currentValuation: 4500000,
-        unrealizedReturn: 2500000, // 125% gain
-    },
-    {
-        name: "Zeta Space",
-        stage: "Seed",
-        amount: 750000,
-        equity: 6,
-        date: new Date("2022-03-12"),
-        currentValuation: 600000,
-        unrealizedReturn: -150000, // -20% loss
-    },
-    {
-        name: "Eta AI",
-        stage: "Series A",
-        amount: 1500000,
-        equity: 20,
-        date: new Date("2020-12-05"),
-        currentValuation: 4000000,
-        unrealizedReturn: 2500000, // 167% gain
-    },
-    {
-        name: "Theta Biotech",
-        stage: "Pre-Seed",
-        amount: 250000,
-        equity: 10,
-        date: new Date("2023-02-10"),
-        currentValuation: 2500000,
-        unrealizedReturn: 2500000, // 0% change
-    },
-    {
-        name: "Iota Energy",
-        stage: "Later Stage",
-        amount: 8000000,
-        equity: 25,
-        date: new Date("2017-07-08"),
-        currentValuation: 20000000,
-        unrealizedReturn: 12000000, // 150% gain
-    },
-    {
-        name: "Kappa Ventures",
-        stage: "Series B",
-        amount: 3000000,
-        equity: 15,
-        date: new Date("2019-05-22"),
-        currentValuation: 5500000,
-        unrealizedReturn: 2500000, // 83% gain
-    },
-    {
-        name: "Lambda Software",
-        stage: "Seed",
-        amount: 400000,
-        equity: 7,
-        date: new Date("2022-07-15"),
-        currentValuation: 450000,
-        unrealizedReturn: 50000, // 12.5% gain
-    },
-    {
-        name: "Mu Networks",
-        stage: "Series A",
-        amount: 2500000,
-        equity: 12,
-        date: new Date("2021-10-30"),
-        currentValuation: 6000000,
-        unrealizedReturn: 3500000, // 140% gain
-    },
-    {
-        name: "Nu Robotics",
-        stage: "Other",
+        name: "Acme Ventures",
+        type: "Venture Capital",
         amount: 1000000,
-        equity: 5,
-        date: new Date("2021-06-25"),
-        currentValuation: 1200000,
-        unrealizedReturn: 200000, // 20% gain
-    },
-    {
-        name: "Xi Analytics",
-        stage: "Pre-Seed",
-        amount: 150000,
         equity: 10,
-        date: new Date("2022-09-10"),
-        currentValuation: 130000,
-        unrealizedReturn: -20000, // -13% loss
+        date: "2023-01-15",
+        stage: "Series A",
+        boardSeat: true,
     },
     {
-        name: "Omicron Fintech",
+        name: "John Doe",
+        type: "Angel Investor",
+        amount: 250000,
+        equity: 2.5,
+        date: "2023-03-20",
+        stage: "Seed",
+        boardSeat: false,
+    },
+    {
+        name: "Tech Accelerator X",
+        type: "Accelerator",
+        amount: 150000,
+        equity: 7,
+        date: "2022-06-10",
+        stage: "Pre-seed",
+        boardSeat: false,
+    },
+    {
+        name: "Future Fund",
+        type: "Corporate Venture Capital",
+        amount: 2000000,
+        equity: 15,
+        date: "2023-09-05",
         stage: "Series B",
-        amount: 3500000,
-        equity: 18,
-        date: new Date("2019-08-19"),
-        currentValuation: 6500000,
-        unrealizedReturn: 3000000, // 86% gain
+        boardSeat: true,
+    },
+    {
+        name: "Growth Partners LLC",
+        type: "Private Equity",
+        amount: 5000000,
+        equity: 20,
+        date: "2024-02-28",
+        stage: "Series C",
+        boardSeat: true,
     },
 ];
 
-
 type SortKey = "name" | "amount" | "equity" | "date";
 
-const Investments = () => {
+const Backers = () => {
     const [searchTerm, setSearchTerm] = useState("");
     const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
     const [sortKey, setSortKey] = useState<SortKey>("date");
     const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
 
-    function UnrealisedToPercentage(
-        amountInvested: number,
-        unrealizedReturn: number
-    ): string {
-        const percentage = (unrealizedReturn / amountInvested) * 100;
-        return `${percentage.toFixed(2)}%`;
-    }
-
-    const filteredInvestors = startups
-        .filter((startup) => {
+    const filteredInvestors = investors
+        .filter((investor) => {
             const matchesSearch =
-                startup.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                startup.stage.toLowerCase().includes(searchTerm.toLowerCase());
+                investor.name
+                    .toLowerCase()
+                    .includes(searchTerm.toLowerCase()) ||
+                investor.type.toLowerCase().includes(searchTerm.toLowerCase());
             const matchesType =
                 selectedTypes.length === 0 ||
-                selectedTypes.includes(startup.stage);
+                selectedTypes.includes(investor.type);
             return matchesSearch && matchesType;
         })
         .sort((a, b) => {
@@ -228,7 +131,7 @@ const Investments = () => {
                 <div className="max-w-6xl mx-auto">
                     <div className="flex justify-between items-center mb-6">
                         <h1 className="text-3xl font-bold">
-                            Current Investments
+                            Current Investors
                         </h1>
                         <Button variant="outline">
                             <Download className="mr-2 h-4 w-4" />
@@ -246,20 +149,15 @@ const Investments = () => {
                         </div>
                         <div className="p-4 border rounded-lg">
                             <h2 className="text-sm font-medium text-gray-500">
-                                Total Portfolio Valuation
+                                Total Equity
                             </h2>
-                            <div className="flex items-baseline justify-between">
-                                <p className="text-2xl font-bold ">
-                                    {totalEquity.toFixed(2)}%
-                                </p>
-                                <p className="text-xs text-green-500">
-                                    (+20% from last month)
-                                </p>
-                            </div>
+                            <p className="text-2xl font-bold">
+                                {totalEquity.toFixed(2)}%
+                            </p>
                         </div>
                         <div className="p-4 border rounded-lg">
                             <h2 className="text-sm font-medium text-gray-500">
-                                Number of Investments
+                                Number of Investors
                             </h2>
                             <p className="text-2xl font-bold">
                                 {filteredInvestors.length}
@@ -305,7 +203,7 @@ const Investments = () => {
                                 </DropdownMenuLabel>
                                 <DropdownMenuSeparator />
                                 {Array.from(
-                                    new Set(startups.map((i) => i.stage))
+                                    new Set(investors.map((i) => i.type))
                                 ).map((type) => (
                                     <DropdownMenuCheckboxItem
                                         key={type}
@@ -344,7 +242,7 @@ const Investments = () => {
                                                 ))}
                                         </Button>
                                     </TableHead>
-                                    <TableHead>Stage</TableHead>
+                                    <TableHead>Type</TableHead>
                                     <TableHead>
                                         <Button
                                             variant="ghost"
@@ -387,8 +285,8 @@ const Investments = () => {
                                                 ))}
                                         </Button>
                                     </TableHead>
-                                    <TableHead>Current Valuation</TableHead>
-                                    <TableHead>Unrealized Return</TableHead>
+                                    <TableHead>Stage</TableHead>
+                                    <TableHead>Board Seat</TableHead>
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
@@ -397,11 +295,11 @@ const Investments = () => {
                                         <TableCell className="font-medium">
                                             {investor.name}
                                         </TableCell>
-                                        <TableCell>{investor.stage}</TableCell>
+                                        <TableCell>{investor.type}</TableCell>
                                         <TableCell>
                                             ${investor.amount.toLocaleString()}
                                         </TableCell>
-                                        <TableCell>
+                                        <TableCell className="">
                                             {investor.equity}%
                                         </TableCell>
                                         <TableCell>
@@ -409,26 +307,9 @@ const Investments = () => {
                                                 investor.date
                                             ).toLocaleDateString("en-GB")}
                                         </TableCell>
+                                        <TableCell>{investor.stage}</TableCell>
                                         <TableCell>
-                                            $
-                                            {investor.currentValuation.toLocaleString()}
-                                        </TableCell>
-                                        <TableCell
-                                            className={cn([
-                                                UnrealisedToPercentage(
-                                                    investor.amount,
-                                                    investor.unrealizedReturn
-                                                ).charAt(0) !== '-' && "text-green-400",
-                                                UnrealisedToPercentage(
-                                                    investor.amount,
-                                                    investor.unrealizedReturn
-                                                ).charAt(0) === '-' && "text-red-400",
-                                            ])}
-                                        >
-                                            {UnrealisedToPercentage(
-                                                investor.amount,
-                                                investor.unrealizedReturn
-                                            )}
+                                            {investor.boardSeat ? "Yes" : "No"}
                                         </TableCell>
                                     </TableRow>
                                 ))}
@@ -455,6 +336,6 @@ const Investments = () => {
             </main>
         </div>
     );
-};
+}
 
-export default Investments;
+export default Backers;

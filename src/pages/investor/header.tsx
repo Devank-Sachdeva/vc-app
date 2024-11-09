@@ -50,12 +50,12 @@ export const Header = () => {
                     Startups
                 </Link>
                 <Link
-                    to="#"
+                    to="/investor/investments"
                     className={cn(
                         "transition-colors hover:text-foreground text-muted-foreground",
                         {
                             "font-semibold text-foreground":
-                                location.pathname === "/investments",
+                                location.pathname === "/investor/investments",
                         }
                     )}
                 >

@@ -25,6 +25,33 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Link } from "react-router-dom";
 
+const investmentData = [
+    {
+        investor: "Acme Ventures",
+        type: "VC",
+        amount: "$1,000,000",
+        date: "Jan 2023",
+    },
+    {
+        investor: "John Doe",
+        type: "Angel",
+        amount: "$250,000",
+        date: "Mar 2023",
+    },
+    {
+        investor: "Tech Accelerator X",
+        type: "Accelerator",
+        amount: "$150,000",
+        date: "Jun 2022",
+    },
+    {
+        investor: "Future Fund",
+        type: "VC",
+        amount: "$400,000",
+        date: "Sep 2023",
+    },
+];
+
 const SDashboard = () => {
     return (
         <div className="flex flex-col w-full ">
@@ -91,7 +118,7 @@ const SDashboard = () => {
                     <Card className="lg:col-span-4">
                         <CardHeader className="flex flex-row justify-between">
                             <div className="">
-                                <CardTitle>Current Investors</CardTitle>
+                                <CardTitle>Top Investors</CardTitle>
                                 <CardDescription>
                                     Overview of your current investor base
                                 </CardDescription>
@@ -114,32 +141,22 @@ const SDashboard = () => {
                                     </TableRow>
                                 </TableHeader>
                                 <TableBody>
-                                    <TableRow>
-                                        <TableCell>Acme Ventures</TableCell>
-                                        <TableCell>VC</TableCell>
-                                        <TableCell>$1,000,000</TableCell>
-                                        <TableCell>Jan 2023</TableCell>
-                                    </TableRow>
-                                    <TableRow>
-                                        <TableCell>John Doe</TableCell>
-                                        <TableCell>Angel</TableCell>
-                                        <TableCell>$250,000</TableCell>
-                                        <TableCell>Mar 2023</TableCell>
-                                    </TableRow>
-                                    <TableRow>
-                                        <TableCell>
-                                            Tech Accelerator X
-                                        </TableCell>
-                                        <TableCell>Accelerator</TableCell>
-                                        <TableCell>$150,000</TableCell>
-                                        <TableCell>Jun 2022</TableCell>
-                                    </TableRow>
-                                    <TableRow>
-                                        <TableCell>Future Fund</TableCell>
-                                        <TableCell>VC</TableCell>
-                                        <TableCell>$400,000</TableCell>
-                                        <TableCell>Sep 2023</TableCell>
-                                    </TableRow>
+                                    {investmentData.map((investment, index) => (
+                                        <TableRow key={index}>
+                                            <TableCell>
+                                                {investment.investor}
+                                            </TableCell>
+                                            <TableCell>
+                                                {investment.type}
+                                            </TableCell>
+                                            <TableCell>
+                                                {investment.amount}
+                                            </TableCell>
+                                            <TableCell>
+                                                {investment.date}
+                                            </TableCell>
+                                        </TableRow>
+                                    ))}
                                 </TableBody>
                             </Table>
                         </CardContent>
