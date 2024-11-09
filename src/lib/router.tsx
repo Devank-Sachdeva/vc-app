@@ -8,6 +8,7 @@ import Profile from "@/pages/investor/profile";
 import Edit from "@/pages/investor/edit-profile";
 import { LoginCard } from "@/components/auth/login-card";
 import RegisterCard from "@/components/auth/register-card";
+import SDashboard from "@/pages/startup/dashboard";
 
 const router = createBrowserRouter([
     {
@@ -62,7 +63,7 @@ const router = createBrowserRouter([
             },
             {
                 path: "/startup/dashboard",
-                element: <Dashboard />,
+                element: <SDashboard />,
             },
         ],
     },

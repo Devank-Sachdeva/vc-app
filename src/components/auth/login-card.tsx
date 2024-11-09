@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -25,25 +25,28 @@ const loginSchema = z.object({
 type LoginFormValues = z.infer<typeof loginSchema>;
 
 export const LoginCard = () => {
-      const [isLoading, setIsLoading] = useState(false);
-      const navigate = useNavigate();
-      const {
-          register,
-          handleSubmit,
-          formState: { errors },
-      } = useForm<LoginFormValues>({
-          resolver: zodResolver(loginSchema),
-      });
-
-      const onSubmit = async (data: LoginFormValues) => {
-          setIsLoading(true);
-          // Here you would typically send the data to your backend
-          console.log(data);
-          // Simulate API call
-          await new Promise((resolve) => setTimeout(resolve, 2000));
-          setIsLoading(false);
-          navigate("/investor/dashboard");
-      };
+    const [isLoading, setIsLoading] = useState(false);
+    const navigate = useNavigate();
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm<LoginFormValues>({
+        resolver: zodResolver(loginSchema),
+        defaultValues: {
+            email: "meow@gmail.com",
+            password: "password123",
+        }
+    });
+    const onSubmit = async (data: LoginFormValues) => {
+        setIsLoading(true);
+        // Here you would typically send the data to your backend
+        console.log(data);
+        // Simulate API call
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+        setIsLoading(false);
+        navigate("/investor/dashboard");
+    };
 
     return (
         <Card className="mx-auto max-w-sm">
@@ -62,7 +65,7 @@ export const LoginCard = () => {
                                 id="email"
                                 type="email"
                                 placeholder="m@example.com"
-                                required
+                                
                                 {...register("email")}
                             />
                             {errors.email && (

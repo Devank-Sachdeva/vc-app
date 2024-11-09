@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -20,34 +20,34 @@ export const Header = () => {
         <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
             <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
                 <Link
-                    to="investor/dashboard"
+                    to="/startup/dashboard"
                     className="flex items-center gap-2 text-lg font-semibold md:text-base"
                 >
                     <Package2 className="h-6 w-6" />
                 </Link>
                 <Link
-                    to="/investor/dashboard"
+                    to="/startup/dashboard"
                     className={cn(
                         "transition-colors hover:text-foreground text-muted-foreground",
                         {
                             "font-semibold text-foreground":
-                                location.pathname === "/investor/dashboard",
+                                location.pathname === "/startup/dashboard",
                         }
                     )}
                 >
                     Dashboard
                 </Link>
                 <Link
-                    to="/investor/startups"
+                    to="/startup/investors"
                     className={cn(
                         "transition-colors hover:text-foreground text-muted-foreground",
                         {
                             "font-semibold text-foreground":
-                                location.pathname === "/investor/startups",
+                                location.pathname === "/startup/investors",
                         }
                     )}
                 >
-                    Startups
+                    Investors
                 </Link>
                 <Link
                     to="#"
@@ -55,11 +55,11 @@ export const Header = () => {
                         "transition-colors hover:text-foreground text-muted-foreground",
                         {
                             "font-semibold text-foreground":
-                                location.pathname === "/investments",
+                                location.pathname === "/startup/backers",
                         }
                     )}
                 >
-                    Investments
+                    Backers
                 </Link>
             </nav>
             <div className="flex w-full items-center gap-4 md:ml-auto md:gap-2 lg:gap-4">
@@ -68,7 +68,7 @@ export const Header = () => {
                         <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
                         <Input
                             type="search"
-                            placeholder="Search startups..."
+                            placeholder="Search Investors..."
                             className="pl-8 sm:w-[300px] md:w-[200px] lg:w-[300px]"
                         />
                     </div>
@@ -87,13 +87,13 @@ export const Header = () => {
                     <DropdownMenuContent align="end">
                         <DropdownMenuItem
                             className="hover:cursor-pointer"
-                            onClick={() => navigate("/investor/profile")}
+                            onClick={() => navigate("/startup/profile")}
                         >
                             My Profile
                         </DropdownMenuItem>
                         <DropdownMenuItem
                             className="hover:cursor-pointer"
-                            onClick={() => navigate("/investor/edit")}
+                            onClick={() => navigate("/startup/edit")}
                         >
                             Edit Profile
                         </DropdownMenuItem>

@@ -43,11 +43,15 @@ export default function RegisterForm() {
     const {
         register,
         handleSubmit,
+        setValue,
         formState: { errors },
     } = useForm<RegisterFormValues>({
         resolver: zodResolver(registerSchema),
         defaultValues: {
             userType: "startup",
+            email: "test@gmail.com",
+            password: "password123",
+            confirmPassword: "password123",
         },
     });
 
@@ -59,8 +63,10 @@ export default function RegisterForm() {
         await new Promise((resolve) => setTimeout(resolve, 2000));
         setIsLoading(false);
         if (data.userType === "startup") {
+            document.cookie = "token=1";
             navigate("/startup/dashboard");
         } else {
+            document.cookie = "token=2";
             navigate("/investor/dashboard");
         }
     };
@@ -81,6 +87,11 @@ export default function RegisterForm() {
                             <RadioGroup
                                 defaultValue="startup"
                                 className="flex space-x-4"
+                                onValueChange={(data) =>
+                                    data === "startup"
+                                        ? setValue("userType", "startup")
+                                        : setValue("userType", "investor")
+                                }
                             >
                                 <div className="flex items-center space-x-2">
                                     <RadioGroupItem
