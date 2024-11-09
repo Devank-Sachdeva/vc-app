@@ -6,7 +6,7 @@ import { Building2, DiamondPercent, DollarSign, Wallet2 } from "lucide-react";
 
 const Dashboard = () => {
     return (
-        <div className="flex flex-1 flex-col gap-4 p-5">
+        <div className="flex flex-1 flex-col gap-4 p-3">
             <div className="grid gap-8 grid-cols-4">
                 <StatCard
                     title={"Total investment"}

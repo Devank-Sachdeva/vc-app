@@ -1,13 +1,7 @@
 "use client";
 
-import{ useState } from "react";
-import {
-    ChevronDown,
-    ChevronLeft,
-    ChevronRight,
-    Filter,
-    Search,
-} from "lucide-react";
+import { useState } from "react";
+import { ChevronDown, ChevronLeft, ChevronRight, Filter, Search } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -29,44 +23,91 @@ import {
     TableRow,
 } from "@/components/ui/table";
 
-const startups = [
+const investors = [
     {
-        name: "Startup 1",
-        sales: "100,000",
-        last_round_valuation: "1,000,000",
-        funding_round: "Seed",
-        tags: ["B2B", "AI", "Fintech", "Healthcare", "Analytics"],
+        name: "TechFund Capital",
+        type: "Venture Capital",
+        investmentRange: "$1M - $5M",
+        domains: ["AI", "SaaS", "Fintech"],
+        location: "San Francisco, CA",
     },
     {
-        name: "Startup 2",
-        sales: "200,000",
-        last_round_valuation: "2,000,000",
-        funding_round: "SeriesA",
-        tags: ["B2C", "AI", "Fintech", "Healthcare", "Analytics"],
+        name: "Innovation Partners",
+        type: "Angel Group",
+        investmentRange: "$250K - $2M",
+        domains: ["Enterprise Software", "IoT", "Cybersecurity"],
+        location: "New York, NY",
     },
     {
-        name: "Startup 3",
-        sales: "300,000",
-        last_round_valuation: "3,000,000",
-        funding_round: "SeriesB",
-        tags: ["Marketing", "SaaS", "Productivity", "Education", "Security"],
+        name: "Global Ventures X",
+        type: "Venture Capital",
+        investmentRange: "$500K - $10M",
+        domains: ["B2B Tech", "Healthtech", "Clean Energy"],
+        location: "London, UK",
+    },
+    {
+        name: "Future Fund",
+        type: "Corporate Venture Capital",
+        investmentRange: "$2M - $20M",
+        domains: ["AI", "Robotics", "Quantum Computing"],
+        location: "Tokyo, Japan",
+    },
+    {
+        name: "Seed Accelerator Pro",
+        type: "Accelerator",
+        investmentRange: "$50K - $200K",
+        domains: ["Mobile Apps", "E-commerce", "EdTech"],
+        location: "Austin, TX",
+    },
+    {
+        name: "TechFund Capital",
+        type: "Venture Capital",
+        investmentRange: "$1M - $5M",
+        domains: ["AI", "SaaS", "Fintech"],
+        location: "San Francisco, CA",
+    },
+    {
+        name: "Innovation Partners",
+        type: "Angel Group",
+        investmentRange: "$250K - $2M",
+        domains: ["Enterprise Software", "IoT", "Cybersecurity"],
+        location: "New York, NY",
+    },
+    {
+        name: "Global Ventures X",
+        type: "Venture Capital",
+        investmentRange: "$500K - $10M",
+        domains: ["B2B Tech", "Healthtech", "Clean Energy"],
+        location: "London, UK",
+    },
+    {
+        name: "Future Fund",
+        type: "Corporate Venture Capital",
+        investmentRange: "$2M - $20M",
+        domains: ["AI", "Robotics", "Quantum Computing"],
+        location: "Tokyo, Japan",
+    },
+    {
+        name: "Seed Accelerator Pro679",
+        type: "Accelerator",
+        investmentRange: "$50K - $200K",
+        domains: ["Mobile Apps", "E-commerce", "EdTech"],
+        location: "Austin, TX",
     },
 ];
 
-
-const Startup = () => {
+export default function Investors() {
     const [searchTerm, setSearchTerm] = useState("");
     const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
 
-    const filteredStartups = startups.filter((startup) => {
+    const filteredInvestors = investors.filter((investor) => {
         const matchesSearch =
-            startup.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            startup.tags.some((domain) =>
+            investor.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            investor.domains.some((domain) =>
                 domain.toLowerCase().includes(searchTerm.toLowerCase())
             );
         const matchesType =
-            selectedTypes.length === 0 ||
-            selectedTypes.includes(startup.funding_round);
+            selectedTypes.length === 0 || selectedTypes.includes(investor.type);
         return matchesSearch && matchesType;
     });
 
@@ -74,9 +115,11 @@ const Startup = () => {
         <div className="flex flex-col min-h-screen">
             <main className="flex-1 p-4 md:p-6">
                 <div className="max-w-6xl mx-auto">
-                    <div className="text-3xl font-bold">Startups</div>
+                    <div className="text-3xl font-bold">
+                        Recommended Investors
+                    </div>
                     <div className="text-base text-muted-foreground mb-6">
-                        Discover High-Potential Startups
+                        Build Success with the Right Investors
                     </div>
                     <div className="flex items-center gap-4 mb-6">
                         <div className="relative flex-1">
@@ -134,37 +177,33 @@ const Startup = () => {
                                     <TableHead className="w-[250px]">
                                         Name
                                     </TableHead>
-                                    <TableHead>Yearly Sales</TableHead>
-                                    <TableHead>Last Round Valuation</TableHead>
-                                    <TableHead>Last Round Type</TableHead>
+                                    <TableHead>Type</TableHead>
+                                    <TableHead>Investment Range</TableHead>
                                     <TableHead>Domains</TableHead>
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                                {filteredStartups.map((startup) => (
-                                    <TableRow key={startup.name}>
+                                {filteredInvestors.map((investor) => (
+                                    <TableRow key={investor.name}>
                                         <TableCell className="font-medium">
-                                            {startup.name}
+                                            {investor.name}
                                         </TableCell>
-                                        <TableCell >
-                                            ${startup.sales}
-                                        </TableCell>
+                                        <TableCell>{investor.type}</TableCell>
                                         <TableCell>
-                                            ${startup.last_round_valuation}
-                                        </TableCell>
-                                        <TableCell>
-                                            {startup.funding_round}
+                                            {investor.investmentRange}
                                         </TableCell>
                                         <TableCell>
                                             <div className="flex flex-wrap gap-1">
-                                                {startup.tags.map((domain) => (
-                                                    <span
-                                                        key={domain}
-                                                        className="inline-flex items-center rounded-full bg-blue-100 px-2.5 py-0.5 text-xs font-medium text-blue-800"
-                                                    >
-                                                        {domain}
-                                                    </span>
-                                                ))}
+                                                {investor.domains.map(
+                                                    (domain) => (
+                                                        <span
+                                                            key={domain}
+                                                            className="inline-flex items-center rounded-full bg-blue-100 px-2.5 py-0.5 text-xs font-medium text-blue-800"
+                                                        >
+                                                            {domain}
+                                                        </span>
+                                                    )
+                                                )}
                                             </div>
                                         </TableCell>
                                     </TableRow>
@@ -172,7 +211,7 @@ const Startup = () => {
                             </TableBody>
                             <TableFooter>
                                 <TableRow>
-                                    <TableCell colSpan={5}>
+                                    <TableCell colSpan={4}>
                                         <div className="flex justify-between">
                                             <div className="text-xs text-muted-foreground">
                                                 Showing <strong>1-10</strong> of{" "}
@@ -192,6 +231,4 @@ const Startup = () => {
             </main>
         </div>
     );
-};
-
-export default Startup;
+}

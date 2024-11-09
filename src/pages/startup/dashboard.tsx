@@ -27,7 +27,7 @@ import { Link } from "react-router-dom";
 
 const SDashboard = () => {
     return (
-        <div className="flex flex-col w-full min-h-screen">
+        <div className="flex flex-col w-full ">
             <main className="flex-1 p-4 md:p-6">
                 <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
                     <Card>

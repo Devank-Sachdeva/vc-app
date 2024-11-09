@@ -8,7 +8,7 @@ const PrivateRoutes = () => {
         <>
             {auth.charAt(auth.length - 1) === '1' && <SHeader />}
             {auth.charAt(auth.length - 1) === '2' && <IHeader />}
-            <div className="max-h-[calc(100vh-64px)] overflow-hidden">
+            <div className="max-h-[calc(100vh-64px)] overflow-y-auto">
                 <Outlet />
             </div>
         </>
