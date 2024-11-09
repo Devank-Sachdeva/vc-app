@@ -23,7 +23,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { ListFilter } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import { StartupElement } from "@/components/startup/startup-element";
+import { StartupList } from "@/components/startup/startup-element";
 
 const StartupData = [
     {
@@ -120,7 +120,7 @@ const Startup = () => {
                             </TableHeader>
                             <TableBody>
                                 {StartupData.map((startup, index) => (
-                                    <StartupElement
+                                    <StartupList
                                         key={index}
                                         name={startup.name}
                                         sales={startup.sales}
@@ -128,7 +128,7 @@ const Startup = () => {
                                             startup.last_round_valuation
                                         }
                                         funding_round={startup.funding_round}
-                                        tags= {startup.tags}
+                                        tags={startup.tags}
                                     />
                                 ))}
                             </TableBody>

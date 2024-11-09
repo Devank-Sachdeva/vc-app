@@ -20,30 +20,30 @@ export const Header = () => {
         <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
             <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
                 <Link
-                    to="#"
+                    to="investor/dashboard"
                     className="flex items-center gap-2 text-lg font-semibold md:text-base"
                 >
                     <Package2 className="h-6 w-6" />
                 </Link>
                 <Link
-                    to="/dashboard"
+                    to="/investor/dashboard"
                     className={cn(
                         "transition-colors hover:text-foreground text-muted-foreground",
                         {
                             "font-semibold text-foreground":
-                                location.pathname === "/dashboard",
+                                location.pathname === "/investor/dashboard",
                         }
                     )}
                 >
                     Dashboard
                 </Link>
                 <Link
-                    to="/startups"
+                    to="/investor/startups"
                     className={cn(
                         "transition-colors hover:text-foreground text-muted-foreground",
                         {
                             "font-semibold text-foreground":
-                                location.pathname === "/startups",
+                                location.pathname === "/investor/startups",
                         }
                     )}
                 >
@@ -87,13 +87,13 @@ export const Header = () => {
                     <DropdownMenuContent align="end">
                         <DropdownMenuItem
                             className="hover:cursor-pointer"
-                            onClick={() => navigate("/profile")}
+                            onClick={() => navigate("/investor/profile")}
                         >
                             My Profile
                         </DropdownMenuItem>
                         <DropdownMenuItem
                             className="hover:cursor-pointer"
-                            onClick={() => navigate("/edit")}
+                            onClick={() => navigate("/investor/edit")}
                         >
                             Edit Profile
                         </DropdownMenuItem>

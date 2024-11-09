@@ -5,7 +5,6 @@ import { Building2, DiamondPercent, DollarSign, Wallet2 } from "lucide-react";
 
 
 const Dashboard = () => {
-    console.log();
     return (
         <div className="flex flex-1 flex-col gap-4 p-5">
             <div className="grid gap-8 grid-cols-4">
@@ -31,7 +30,7 @@ const Dashboard = () => {
                     cardIcon={<DollarSign className="h-6 w-6" />}
                 />
                 <StatCard
-                    title={"Portfolio Return"}
+                    title={"Predicted Return"}
                     amount={"15%"}
                     description={"Annualized return on investment"}
                     key={4}

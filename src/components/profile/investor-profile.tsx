@@ -68,12 +68,7 @@ export default function InvestorProfile() {
                                 {investor.name}
                             </CardTitle>
                             <div>
-                                <Button size={"sm"}>
-                                    <div className="flex">
-                                        Edit
-                                        <EditButton />
-                                    </div>
-                                </Button>
+                                <EditButton />
                             </div>
                         </div>
                         <p className="text-muted-foreground max-w-2xl">

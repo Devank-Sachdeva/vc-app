@@ -1,7 +1,7 @@
 import { TableRow, TableCell } from "../ui/table";
 import { FundingRound } from "@/lib/utils";
 
-interface StartupElementTypes {
+interface StartupListTypes {
     name: string;
     sales: string;
     last_round_valuation: string;
@@ -9,13 +9,13 @@ interface StartupElementTypes {
     tags: string[];
 }
 
-export const StartupElement = ({
+export const StartupList = ({
     name,
     sales,
     last_round_valuation,
     funding_round,
     tags,
-}: StartupElementTypes) => {
+}: StartupListTypes) => {
     return (
         <TableRow className="grid grid-cols-12 text-center">
             <TableCell className="font-medium col-span-2">{name}</TableCell>
