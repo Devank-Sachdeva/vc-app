@@ -16,16 +16,16 @@ import {
 
 
 const chartData = [
-    { browser: "seed", visitors: 275, fill: "var(--color-seed)" },
-    { browser: "seriesA", visitors: 200, fill: "var(--color-seriesA)" },
-    { browser: "seriesB", visitors: 187, fill: "var(--color-seriesB)" },
-    { browser: "laterStage", visitors: 173, fill: "var(--color-laterStage)" },
-    { browser: "other", visitors: 90, fill: "var(--color-other)" },
+    { stage: "seed", count: 275, fill: "var(--color-seed)" },
+    { stage: "seriesA", count: 200, fill: "var(--color-seriesA)" },
+    { stage: "seriesB", count: 187, fill: "var(--color-seriesB)" },
+    { stage: "laterStage", count: 173, fill: "var(--color-laterStage)" },
+    { stage: "other", count: 90, fill: "var(--color-other)" },
 ];
 
 const chartConfig = {
-    visitors: {
-        label: "Visitors",
+    count: {
+        label: "label",
     },
     seed: {
         label: "Seed",
@@ -64,14 +64,14 @@ export function StartupTypeChart() {
                         <ChartTooltip
                             content={
                                 <ChartTooltipContent
-                                    nameKey="visitors"
+                                    nameKey="stage"
                                     hideLabel
                                 />
                             }
                         />
-                        <Pie data={chartData} dataKey="visitors">
+                        <Pie data={chartData} dataKey="count">
                             <LabelList
-                                dataKey="browser"
+                                dataKey="stage"
                                 className="fill-background text-white"
                                 stroke="none"
                                 fontSize={12}

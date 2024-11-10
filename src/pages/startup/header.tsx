@@ -85,7 +85,16 @@ export const Header = () => {
                         Edit Profile
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem className="hover:cursor-pointer">
+                    <DropdownMenuItem
+                        className="hover:cursor-pointer"
+                        onClick={() => {
+                            document.cookie.split(";").forEach((cookie) => {
+                                const cookieName = cookie.split("=")[0].trim();
+                                document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+                            });
+                            navigate("/");
+                        }}
+                    >
                         Logout
                     </DropdownMenuItem>
                 </DropdownMenuContent>

@@ -35,7 +35,7 @@ const registerSchema = z
 
 type RegisterFormValues = z.infer<typeof registerSchema>;
 
-export default function RegisterForm() {
+export const RegisterCard = () => {
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
     const {

@@ -29,6 +29,7 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
+import { useNavigate } from "react-router-dom";
 
 const investors = [
     {
@@ -85,6 +86,7 @@ const Backers = () => {
     const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
     const [sortKey, setSortKey] = useState<SortKey>("date");
     const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
+    const navigate = useNavigate();
 
     const filteredInvestors = investors
         .filter((investor) => {
@@ -290,7 +292,21 @@ const Backers = () => {
                                 {filteredInvestors.map((investor) => (
                                     <TableRow key={investor.name}>
                                         <TableCell className="font-medium">
-                                            {investor.name}
+                                            <p
+                                                className="hover:underline hover:cursor-pointer"
+                                                onClick={() =>
+                                                    navigate(
+                                                        `/startup/investor/${investor.name
+                                                            .toLowerCase()
+                                                            .replace(
+                                                                / /g,
+                                                                "-"
+                                                            )}`
+                                                    )
+                                                }
+                                            >
+                                                {investor.name}
+                                            </p>
                                         </TableCell>
                                         <TableCell>{investor.type}</TableCell>
                                         <TableCell>

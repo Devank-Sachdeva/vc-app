@@ -59,36 +59,45 @@ export const Header = () => {
                     Investments
                 </Link>
             </nav>
-                <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <Button
-                            variant="secondary"
-                            size="icon"
-                            className="rounded-full"
-                        >
-                            <CircleUser className="h-5 w-5" />
-                            <span className="sr-only">Toggle user menu</span>
-                        </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                        <DropdownMenuItem
-                            className="hover:cursor-pointer"
-                            onClick={() => navigate("/investor/profile")}
-                        >
-                            My Profile
-                        </DropdownMenuItem>
-                        <DropdownMenuItem
-                            className="hover:cursor-pointer"
-                            onClick={() => navigate("/investor/edit")}
-                        >
-                            Edit Profile
-                        </DropdownMenuItem>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem className="hover:cursor-pointer">
-                            Logout
-                        </DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
+            <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                    <Button
+                        variant="secondary"
+                        size="icon"
+                        className="rounded-full"
+                    >
+                        <CircleUser className="h-5 w-5" />
+                        <span className="sr-only">Toggle user menu</span>
+                    </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                    <DropdownMenuItem
+                        className="hover:cursor-pointer"
+                        onClick={() => navigate("/investor/profile")}
+                    >
+                        My Profile
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                        className="hover:cursor-pointer"
+                        onClick={() => navigate("/investor/edit")}
+                    >
+                        Edit Profile
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem
+                        className="hover:cursor-pointer"
+                        onClick={() => {
+                            document.cookie.split(";").forEach((cookie) => {
+                                const cookieName = cookie.split("=")[0].trim();
+                                document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+                            });
+                            navigate("/");
+                        }}
+                    >
+                        Logout
+                    </DropdownMenuItem>
+                </DropdownMenuContent>
+            </DropdownMenu>
         </header>
     );
 };

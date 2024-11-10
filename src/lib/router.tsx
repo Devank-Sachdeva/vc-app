@@ -3,18 +3,19 @@ import App from "@/App";
 import Auth from "@/pages/auth";
 import PrivateRoutes from "@/lib/private-route";
 import Dashboard from "@/pages/investor/dashboard";
-import Startup from "@/pages/investor/startup";
-import Profile from "@/pages/investor/profile";
+import Startups from "@/pages/investor/startups";
+import IProfile from "@/pages/investor/profile";
+import SProfile from "@/pages/startup/profile";
 import Edit from "@/pages/investor/edit-profile";
 import { LoginCard } from "@/components/auth/login-card";
-import RegisterCard from "@/components/auth/register-card";
+import { RegisterCard } from "@/components/auth/register-card";
 import SDashboard from "@/pages/startup/dashboard";
 import Investors from "@/pages/startup/investors";
 import Backers from "@/pages/startup/backers";
 import Investments from "@/pages/investor/investments";
-import StartupProfile from "@/pages/startup/profile";
 import StartupProfileEdit from "@/pages/startup/edit-profile";
 import Investor from "@/pages/startup/investor";
+import Startup from "@/pages/investor/startup";
 
 const router = createBrowserRouter([
     {
@@ -48,6 +49,10 @@ const router = createBrowserRouter([
             },
             {
                 path: "/investor/startups",
+                element: <Startups />,
+            },
+            {
+                path: "/investor/startup/:name",
                 element: <Startup />,
             },
             {
@@ -56,7 +61,7 @@ const router = createBrowserRouter([
             },
             {
                 path: "/investor/profile",
-                element: <Profile />,
+                element: <IProfile />,
             },
             {
                 path: "/investor/edit",
@@ -80,7 +85,7 @@ const router = createBrowserRouter([
                 element: <Investors />,
             },
             {
-                path: "/startup/investors/:id",
+                path: "/startup/investor/:id",
                 element: <Investor />,
             },
             {
@@ -89,7 +94,7 @@ const router = createBrowserRouter([
             },
             {
                 path: "/startup/profile",
-                element: <StartupProfile />,
+                element: <SProfile />,
             },
             {
                 path: "/startup/edit",

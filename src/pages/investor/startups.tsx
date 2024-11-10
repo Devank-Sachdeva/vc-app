@@ -26,123 +26,64 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
+import { StartupTags } from "@/lib/utils";
 import { useNavigate } from "react-router-dom";
 
-const investors = [
+const startups = [
     {
-        name: "TechFund Capital",
-        type: "Venture Capital",
-        investmentRange: "$1M - $5M",
-        domains: ["AI", "SaaS", "Fintech"],
-        location: "San Francisco, CA",
-        id: 1,
+        name: "Startup 1",
+        sales: "100,000",
+        last_round_valuation: "1,000,000",
+        funding_round: "Seed",
+        tags: ["B2B", "AI", "Fintech", "Healthcare", "Analytics"],
     },
     {
-        name: "Innovation Partners",
-        type: "Angel Group",
-        investmentRange: "$250K - $2M",
-        domains: ["Enterprise Software", "IoT", "Cybersecurity"],
-        location: "New York, NY",
-        id: 2,
+        name: "Startup 2",
+        sales: "200,000",
+        last_round_valuation: "2,000,000",
+        funding_round: "SeriesA",
+        tags: ["B2C", "AI", "Fintech", "Healthcare", "Analytics"],
     },
     {
-        name: "Global Ventures X",
-        type: "Venture Capital",
-        investmentRange: "$500K - $10M",
-        domains: ["B2B Tech", "Healthtech", "Clean Energy"],
-        location: "London, UK",
-        id: 3,
-    },
-    {
-        name: "Future Fund",
-        type: "Corporate Venture Capital",
-        investmentRange: "$2M - $20M",
-        domains: ["AI", "Robotics", "Quantum Computing"],
-        location: "Tokyo, Japan",
-        id: 4,
-    },
-    {
-        name: "Seed Accelerator Pro",
-        type: "Accelerator",
-        investmentRange: "$50K - $200K",
-        domains: ["Mobile Apps", "E-commerce", "EdTech"],
-        location: "Austin, TX",
-        id: 5,
-    },
-    {
-        name: "TechFund Capital",
-        type: "Venture Capital",
-        investmentRange: "$1M - $5M",
-        domains: ["AI", "SaaS", "Fintech"],
-        location: "San Francisco, CA",
-        id: 6,
-    },
-    {
-        name: "Innovation Partners",
-        type: "Angel Group",
-        investmentRange: "$250K - $2M",
-        domains: ["Enterprise Software", "IoT", "Cybersecurity"],
-        location: "New York, NY",
-        id: 7,
-    },
-    {
-        name: "Global Ventures X",
-        type: "Venture Capital",
-        investmentRange: "$500K - $10M",
-        domains: ["B2B Tech", "Healthtech", "Clean Energy"],
-        location: "London, UK",
-        id: 8,
-    },
-    {
-        name: "Future Fund",
-        type: "Corporate Venture Capital",
-        investmentRange: "$2M - $20M",
-        domains: ["AI", "Robotics", "Quantum Computing"],
-        location: "Tokyo, Japan",
-        id: 9,
-    },
-    {
-        name: "Seed Accelerator Pro679",
-        type: "Accelerator",
-        investmentRange: "$50K - $200K",
-        domains: ["Mobile Apps", "E-commerce", "EdTech"],
-        location: "Austin, TX",
-        id: 10,
+        name: "Startup 3",
+        sales: "300,000",
+        last_round_valuation: "3,000,000",
+        funding_round: "SeriesB",
+        tags: ["Marketing", "SaaS", "Productivity", "Education", "Security"],
     },
 ];
 
-export default function Investors() {
+const Startups = () => {
     const [searchTerm, setSearchTerm] = useState("");
     const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
     const navigate = useNavigate();
 
-    const filteredInvestors = investors.filter((investor) => {
+    const filteredStartups = startups.filter((startup) => {
         const matchesSearch =
-            investor.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            investor.domains.some((domain) =>
+            startup.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            startup.tags.some((domain) =>
                 domain.toLowerCase().includes(searchTerm.toLowerCase())
             );
         const matchesType =
-            selectedTypes.length === 0 || selectedTypes.includes(investor.type);
+            selectedTypes.length === 0 ||
+            selectedTypes.includes(startup.funding_round);
         return matchesSearch && matchesType;
     });
 
     return (
-        <div className="flex flex-col min-h-screen">
+        <div className="flex flex-col overflow-y-auto">
             <main className="flex-1 p-4 md:p-6">
                 <div className="max-w-6xl mx-auto">
-                    <div className="text-3xl font-bold">
-                        Recommended Investors
-                    </div>
+                    <div className="text-3xl font-bold">Startups</div>
                     <div className="text-base text-muted-foreground mb-6">
-                        Build Success with the Right Investors
+                        Discover High-Potential Startups
                     </div>
                     <div className="flex items-center gap-4 mb-6">
                         <div className="relative flex-1">
                             <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500" />
                             <Input
                                 className="pl-8"
-                                placeholder="Search investors or domains..."
+                                placeholder="Search startups or domains..."
                                 type="search"
                                 value={searchTerm}
                                 onChange={(e) => setSearchTerm(e.target.value)}
@@ -156,17 +97,15 @@ export default function Investors() {
                                     <ChevronDown className="ml-2 h-4 w-4" />
                                 </Button>
                             </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end" className="w-56">
+                            <DropdownMenuContent
+                                align="end"
+                                className="w-56 overflow-y-auto max-h-[300px]"
+                            >
                                 <DropdownMenuLabel>
-                                    Investor Type
+                                    Startup Type
                                 </DropdownMenuLabel>
                                 <DropdownMenuSeparator />
-                                {[
-                                    "Venture Capital",
-                                    "Angel Group",
-                                    "Corporate Venture Capital",
-                                    "Accelerator",
-                                ].map((type) => (
+                                {Object.values(StartupTags).map((type) => (
                                     <DropdownMenuCheckboxItem
                                         key={type}
                                         checked={selectedTypes.includes(type)}
@@ -193,43 +132,45 @@ export default function Investors() {
                                     <TableHead className="w-[250px]">
                                         Name
                                     </TableHead>
-                                    <TableHead>Type</TableHead>
-                                    <TableHead>Investment Range</TableHead>
+                                    <TableHead>Yearly Sales</TableHead>
+                                    <TableHead>Last Round Valuation</TableHead>
+                                    <TableHead>Last Round Type</TableHead>
                                     <TableHead>Domains</TableHead>
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                                {filteredInvestors.map((investor) => (
+                                {filteredStartups.map((startup) => (
                                     <TableRow
-                                        key={investor.name}
+                                        key={startup.name}
                                         className="cursor-pointer"
                                         onClick={() =>
                                             navigate(
-                                                `/startup/investor/${investor.name
+                                                `/investor/startup/${startup.name
                                                     .toLowerCase()
                                                     .replace(/ /g, "-")}`
                                             )
                                         }
                                     >
                                         <TableCell className="font-medium">
-                                            {investor.name}
+                                            {startup.name}
                                         </TableCell>
-                                        <TableCell>{investor.type}</TableCell>
+                                        <TableCell>${startup.sales}</TableCell>
                                         <TableCell>
-                                            {investor.investmentRange}
+                                            ${startup.last_round_valuation}
+                                        </TableCell>
+                                        <TableCell>
+                                            {startup.funding_round}
                                         </TableCell>
                                         <TableCell>
                                             <div className="flex flex-wrap gap-1">
-                                                {investor.domains.map(
-                                                    (domain) => (
-                                                        <span
-                                                            key={domain}
-                                                            className="inline-flex items-center rounded-full bg-blue-100 px-2.5 py-0.5 text-xs font-medium text-blue-800"
-                                                        >
-                                                            {domain}
-                                                        </span>
-                                                    )
-                                                )}
+                                                {startup.tags.map((domain) => (
+                                                    <span
+                                                        key={domain}
+                                                        className="inline-flex items-center rounded-full bg-blue-100 px-2.5 py-0.5 text-xs font-medium text-blue-800"
+                                                    >
+                                                        {domain}
+                                                    </span>
+                                                ))}
                                             </div>
                                         </TableCell>
                                     </TableRow>
@@ -237,7 +178,7 @@ export default function Investors() {
                             </TableBody>
                             <TableFooter>
                                 <TableRow>
-                                    <TableCell colSpan={4}>
+                                    <TableCell colSpan={5}>
                                         <div className="flex justify-between">
                                             <div className="text-xs text-muted-foreground">
                                                 Showing <strong>1-10</strong> of{" "}
@@ -257,4 +198,6 @@ export default function Investors() {
             </main>
         </div>
     );
-}
+};
+
+export default Startups;

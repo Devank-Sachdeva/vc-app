@@ -30,6 +30,7 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
+import { useNavigate } from "react-router-dom";
 
 const startups = [
     {
@@ -176,6 +177,7 @@ const Investments = () => {
     const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
     const [sortKey, setSortKey] = useState<SortKey>("date");
     const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
+    const navigate = useNavigate();
 
     function UnrealisedToPercentage(
         amountInvested: number,
@@ -185,7 +187,7 @@ const Investments = () => {
         return `${percentage.toFixed(2)}%`;
     }
 
-    const filteredInvestors = startups
+    const filteredStartups = startups
         .filter((startup) => {
             const matchesSearch =
                 startup.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -201,11 +203,11 @@ const Investments = () => {
             return 0;
         });
 
-    const totalInvestment = filteredInvestors.reduce(
+    const totalInvestment = filteredStartups.reduce(
         (sum, investor) => sum + investor.amount,
         0
     );
-    const totalEquity = filteredInvestors.reduce(
+    const totalEquity = filteredStartups.reduce(
         (sum, investor) => sum + investor.equity,
         0
     );
@@ -259,7 +261,7 @@ const Investments = () => {
                                 Number of Investments
                             </h2>
                             <p className="text-2xl font-bold">
-                                {filteredInvestors.length}
+                                {filteredStartups.length}
                             </p>
                         </div>
                         <div className="p-4 border rounded-lg">
@@ -269,7 +271,7 @@ const Investments = () => {
                             <p className="text-2xl font-bold">
                                 {new Date(
                                     Math.max(
-                                        ...filteredInvestors.map((i) =>
+                                        ...filteredStartups.map((i) =>
                                             new Date(i.date).getTime()
                                         )
                                     )
@@ -389,44 +391,56 @@ const Investments = () => {
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                                {filteredInvestors.map((investor) => (
-                                    <TableRow key={investor.name}>
+                                {filteredStartups.map((startup) => (
+                                    <TableRow key={startup.name}>
                                         <TableCell className="font-medium">
-                                            {investor.name}
+                                            <p
+                                                className="hover:underline hover:cursor-pointer"
+                                                onClick={() =>
+                                                    navigate(
+                                                        `/investor/startup/${startup.name
+                                                            .toLowerCase()
+                                                            .replace(
+                                                                / /g,
+                                                                "-"
+                                                            )}`
+                                                    )
+                                                }
+                                            >
+                                                {startup.name}
+                                            </p>
                                         </TableCell>
-                                        <TableCell>{investor.stage}</TableCell>
+                                        <TableCell>{startup.stage}</TableCell>
                                         <TableCell>
-                                            ${investor.amount.toLocaleString()}
+                                            ${startup.amount.toLocaleString()}
                                         </TableCell>
-                                        <TableCell>
-                                            {investor.equity}%
-                                        </TableCell>
+                                        <TableCell>{startup.equity}%</TableCell>
                                         <TableCell>
                                             {new Date(
-                                                investor.date
+                                                startup.date
                                             ).toLocaleDateString("en-GB")}
                                         </TableCell>
                                         <TableCell>
                                             $
-                                            {investor.currentValuation.toLocaleString()}
+                                            {startup.currentValuation.toLocaleString()}
                                         </TableCell>
                                         <TableCell
                                             className={cn([
                                                 UnrealisedToPercentage(
-                                                    investor.amount,
-                                                    investor.unrealizedReturn
+                                                    startup.amount,
+                                                    startup.unrealizedReturn
                                                 ).charAt(0) !== "-" &&
                                                     "text-green-400",
                                                 UnrealisedToPercentage(
-                                                    investor.amount,
-                                                    investor.unrealizedReturn
+                                                    startup.amount,
+                                                    startup.unrealizedReturn
                                                 ).charAt(0) === "-" &&
                                                     "text-red-400",
                                             ])}
                                         >
                                             {UnrealisedToPercentage(
-                                                investor.amount,
-                                                investor.unrealizedReturn
+                                                startup.amount,
+                                                startup.unrealizedReturn
                                             )}
                                         </TableCell>
                                     </TableRow>
