@@ -387,7 +387,7 @@ const Investments = () => {
                                                 ))}
                                         </Button>
                                     </TableHead>
-                                    <TableHead>Current Valuation</TableHead>
+                                    <TableHead>Company Valuation</TableHead>
                                     <TableHead>Unrealized Return</TableHead>
                                 </TableRow>
                             </TableHeader>

@@ -12,6 +12,8 @@ import SDashboard from "@/pages/startup/dashboard";
 import Investors from "@/pages/startup/investors";
 import Backers from "@/pages/startup/backers";
 import Investments from "@/pages/investor/investments";
+import StartupProfile from "@/pages/startup/profile";
+import StartupProfileEdit from "@/pages/startup/edit-profile";
 
 const router = createBrowserRouter([
     {
@@ -79,6 +81,14 @@ const router = createBrowserRouter([
             {
                 path: "/startup/backers",
                 element: <Backers />,
+            },
+            {
+                path: "/startup/profile",
+                element: <StartupProfile />,
+            },
+            {
+                path: "/startup/edit",
+                element: <StartupProfileEdit />,
             },
         ],
     },

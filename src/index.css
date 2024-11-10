@@ -4,6 +4,7 @@
 
 @layer base {
   :root {
+    overflow-y: hidden;
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
     --card: 0 0% 100%;
@@ -30,6 +31,32 @@
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
   }
+
+     input[type="date"]::-webkit-calendar-picker-indicator {
+       color: rgba(0, 0, 0, 0);
+       opacity: 1;
+       display: block;
+       background-repeat: no-repeat;
+       width: 25px;
+       height: 25px;
+       border-width: thin
+     }
+  
+     input[type="date"]::-webkit-calendar-picker-indicator {
+       position: relative;
+       right: 82%;
+     }
+  
+     input::-webkit-datetime-edit-fields-wrapper {
+       position: relative;
+       left: 10%;
+     }
+  
+     input::-webkit-datetime-edit {
+       position: relative;
+       left: 10%;
+     }  
+   
 
   .dark {
     --background: 222.2 84% 4.9%;
