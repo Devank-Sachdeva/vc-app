@@ -78,7 +78,7 @@ export default function InvestorProfile({ isOwn = true }) {
                                         onClick={() => {
                                             if (isOwn) {
                                                 navigate(
-                                                    "/investor/profile/edit"
+                                                    "/investor/edit"
                                                 );
                                             }
                                         }}
