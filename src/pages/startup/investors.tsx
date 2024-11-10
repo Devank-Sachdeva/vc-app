@@ -1,7 +1,11 @@
-"use client";
-
 import { useState } from "react";
-import { ChevronDown, ChevronLeft, ChevronRight, Filter, Search } from "lucide-react";
+import {
+    ChevronDown,
+    ChevronLeft,
+    ChevronRight,
+    Filter,
+    Search,
+} from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -22,6 +26,7 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
+import { useNavigate } from "react-router-dom";
 
 const investors = [
     {
@@ -30,6 +35,7 @@ const investors = [
         investmentRange: "$1M - $5M",
         domains: ["AI", "SaaS", "Fintech"],
         location: "San Francisco, CA",
+        id: 1,
     },
     {
         name: "Innovation Partners",
@@ -37,6 +43,7 @@ const investors = [
         investmentRange: "$250K - $2M",
         domains: ["Enterprise Software", "IoT", "Cybersecurity"],
         location: "New York, NY",
+        id: 2,
     },
     {
         name: "Global Ventures X",
@@ -44,6 +51,7 @@ const investors = [
         investmentRange: "$500K - $10M",
         domains: ["B2B Tech", "Healthtech", "Clean Energy"],
         location: "London, UK",
+        id: 3,
     },
     {
         name: "Future Fund",
@@ -51,6 +59,7 @@ const investors = [
         investmentRange: "$2M - $20M",
         domains: ["AI", "Robotics", "Quantum Computing"],
         location: "Tokyo, Japan",
+        id: 4,
     },
     {
         name: "Seed Accelerator Pro",
@@ -58,6 +67,7 @@ const investors = [
         investmentRange: "$50K - $200K",
         domains: ["Mobile Apps", "E-commerce", "EdTech"],
         location: "Austin, TX",
+        id: 5,
     },
     {
         name: "TechFund Capital",
@@ -65,6 +75,7 @@ const investors = [
         investmentRange: "$1M - $5M",
         domains: ["AI", "SaaS", "Fintech"],
         location: "San Francisco, CA",
+        id: 6,
     },
     {
         name: "Innovation Partners",
@@ -72,6 +83,7 @@ const investors = [
         investmentRange: "$250K - $2M",
         domains: ["Enterprise Software", "IoT", "Cybersecurity"],
         location: "New York, NY",
+        id: 7,
     },
     {
         name: "Global Ventures X",
@@ -79,6 +91,7 @@ const investors = [
         investmentRange: "$500K - $10M",
         domains: ["B2B Tech", "Healthtech", "Clean Energy"],
         location: "London, UK",
+        id: 8,
     },
     {
         name: "Future Fund",
@@ -86,6 +99,7 @@ const investors = [
         investmentRange: "$2M - $20M",
         domains: ["AI", "Robotics", "Quantum Computing"],
         location: "Tokyo, Japan",
+        id: 9,
     },
     {
         name: "Seed Accelerator Pro679",
@@ -93,12 +107,14 @@ const investors = [
         investmentRange: "$50K - $200K",
         domains: ["Mobile Apps", "E-commerce", "EdTech"],
         location: "Austin, TX",
+        id: 10,
     },
 ];
 
 export default function Investors() {
     const [searchTerm, setSearchTerm] = useState("");
     const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
+    const navigate = useNavigate();
 
     const filteredInvestors = investors.filter((investor) => {
         const matchesSearch =
@@ -184,7 +200,7 @@ export default function Investors() {
                             </TableHeader>
                             <TableBody>
                                 {filteredInvestors.map((investor) => (
-                                    <TableRow key={investor.name}>
+                                    <TableRow key={investor.name} className="cursor-pointer" onClick={() => navigate(`/startup/investors/${investor.id}`)}>
                                         <TableCell className="font-medium">
                                             {investor.name}
                                         </TableCell>

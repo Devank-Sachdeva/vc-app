@@ -14,6 +14,7 @@ import Backers from "@/pages/startup/backers";
 import Investments from "@/pages/investor/investments";
 import StartupProfile from "@/pages/startup/profile";
 import StartupProfileEdit from "@/pages/startup/edit-profile";
+import Investor from "@/pages/startup/investor";
 
 const router = createBrowserRouter([
     {
@@ -77,6 +78,10 @@ const router = createBrowserRouter([
             {
                 path: "/startup/investors",
                 element: <Investors />,
+            },
+            {
+                path: "/startup/investors/:id",
+                element: <Investor />,
             },
             {
                 path: "/startup/backers",

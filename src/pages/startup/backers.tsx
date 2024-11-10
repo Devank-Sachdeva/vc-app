@@ -1,5 +1,3 @@
-"use client";
-
 import { useState } from "react";
 import {
     ChevronDown,
@@ -7,7 +5,6 @@ import {
     ChevronRight,
     Download,
     Filter,
-    
     Search,
     SortAsc,
     SortDesc,
@@ -336,6 +333,6 @@ const Backers = () => {
             </main>
         </div>
     );
-}
+};
 
 export default Backers;

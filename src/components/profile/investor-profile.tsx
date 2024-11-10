@@ -9,14 +9,18 @@ import {
     BookOpenIcon,
     Building2Icon,
     TagIcon,
+    ArrowUpRight,
+    ChartNoAxesCombined,
 } from "lucide-react";
-import { EditButton } from "./edit-button";
+import { useNavigate } from "react-router-dom";
 
-export default function InvestorProfile() {
+export default function InvestorProfile({ isOwn = true }) {
     const investor = {
         name: "John Doe",
         photo: "/placeholder.svg?height=200&width=200",
-        bio: "Experienced angel investor with a passion for tech startups. 15+ years in venture capital, focusing on AI, blockchain, and sustainable energy solutions.Experienced angel investor with a passion for tech startups. 15+ years in venture capital, focusing on AI, blockchain, and sustainable energy solutions.Experienced angel investor with a passion for tech startups. 15+ years in venture capital, focusing on AI, blockchain, and sustainable energy solutions.Experienced angel investor with a passion for tech startups. 15+ years in venture capital, focusing on AI, blockchain, and sustainable energy solutions.Experienced angel investor with a passion for tech startups. 15+ years in venture capital, focusing on AI, blockchain, and sustainable energy solutions.Experienced angel investor with a passion for tech startups. 15+ years in venture capital, focusing on AI, blockchain, and sustainable energy solutions.Experienced angel investor with a passion for tech startups. 15+ years in venture capital, focusing on AI, blockchain, and sustainable energy solutions.Experienced angel investor with a passion for tech startups. 15+ years in venture capital, focusing on AI, blockchain, and sustainable energy solutions.Experienced angel investor with a passion for tech startups. 15+ years in venture capital, focusing on AI, blockchain, and sustainable energy solutions.",
+        bio: "Experienced angel investor with a passion for tech startups. 15+ years in venture capital, focusing on AI, blockchain, and sustainable energy solutions.Experienced angel investor with a passion for tech startups. 15+ years in venture capital, focusing on AI, blockchain, and sustainable energy solutions.Experienced angel investor with a passion for tech startups. 15+ years in venture capital, focusing on AI, blockchain, and sustainable energy solutions.Experienced angel investor with a passion for tech startups.",
+        totalInvested: 1000000,
+        averageInvestment: 50000,
         investments: [
             { name: "TechCorp", industry: "AI" },
             { name: "BlockChain Solutions", industry: "Blockchain" },
@@ -49,9 +53,11 @@ export default function InvestorProfile() {
         ],
     };
 
+    const navigate = useNavigate();
+
     return (
-        <div className="w-screen mx-auto px-4 pt-8 pb-20 h-auto">
-            <Card className="max-w-4xl mx-auto">
+        <div className="w-[80%] mx-auto px-4 py-8 h-auto">
+            <Card className="w-full mx-auto">
                 <CardHeader className="flex flex-col sm:flex-row items-center gap-6 pb-6">
                     <Avatar className="w-32 h-32">
                         <AvatarImage src={investor.photo} alt={investor.name} />
@@ -62,21 +68,64 @@ export default function InvestorProfile() {
                                 .join("")}
                         </AvatarFallback>
                     </Avatar>
-                    <div className="text-center sm:text-left">
+                    <div className="text-center sm:text-left w-full">
                         <div className="flex justify-between">
-                            <CardTitle className="text-3xl font-bold mb-2">
+                            <CardTitle className="text-3xl font-bold mb-2 flex justify-between w-full">
                                 {investor.name}
+                                <div>
+                                    <Button
+                                        size={"sm"}
+                                        onClick={() => {
+                                            if (isOwn) {
+                                                navigate(
+                                                    "/investor/profile/edit"
+                                                );
+                                            }
+                                        }}
+                                    >
+                                        <div className="flex text-base items-center">
+                                            {isOwn ? "Edit" : "Connect"}
+                                            <ArrowUpRight className="w-5 h-5 ml-1" />
+                                        </div>
+                                    </Button>
+                                </div>
                             </CardTitle>
-                            <div>
-                                <EditButton />
-                            </div>
                         </div>
-                        <p className="text-muted-foreground max-w-2xl">
-                            {investor.bio}
-                        </p>
+                        <p className="text-muted-foreground ">{investor.bio}</p>
                     </div>
                 </CardHeader>
                 <CardContent className="grid gap-6">
+                    <section>
+                        <h2 className="text-xl font-semibold mb-3 flex items-center gap-2">
+                            <ChartNoAxesCombined className="w-5 h-5" />
+                            Portfolio Highlights
+                        </h2>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <Card>
+                                <CardContent className="p-4">
+                                    <CardTitle className="text-lg mb-1">
+                                        Average Investment Size
+                                    </CardTitle>
+                                    <p className="text-muted-foreground">
+                                        $
+                                        {investor.averageInvestment.toLocaleString()}
+                                    </p>
+                                </CardContent>
+                            </Card>
+                            <Card>
+                                <CardContent className="p-4">
+                                    <CardTitle className="text-lg mb-1">
+                                        Total Amount Invested
+                                    </CardTitle>
+                                    <p className="text-muted-foreground">
+                                        $
+                                        {investor.totalInvested.toLocaleString()}
+                                    </p>
+                                </CardContent>
+                            </Card>
+                        </div>
+                    </section>
+                    <Separator />
                     <section>
                         <h2 className="text-xl font-semibold mb-3 flex items-center gap-2">
                             <Building2Icon className="w-5 h-5" />
@@ -113,9 +162,7 @@ export default function InvestorProfile() {
                             ))}
                         </div>
                     </section>
-
                     <Separator />
-
                     <section>
                         <h2 className="text-xl font-semibold mb-3">
                             Portfolio Links

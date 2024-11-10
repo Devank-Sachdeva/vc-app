@@ -1,11 +1,11 @@
 import InvestorProfile from "@/components/profile/investor-profile";
 
-const Profile = () => {
+const Investor = () => {
     return (
         <div className="flex flex-col h-screen">
-            <InvestorProfile />
+            <InvestorProfile isOwn={false} />
         </div>
     );
-}
+};
 
-export default Profile;
+export default Investor;

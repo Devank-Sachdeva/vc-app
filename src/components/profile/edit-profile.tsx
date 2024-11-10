@@ -1,5 +1,3 @@
-"use client";
-
 import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -48,7 +46,7 @@ const investorFormSchema = z.object({
 type InvestorFormValues = z.infer<typeof investorFormSchema>;
 
 export default function EditInvestorProfile() {
-    const [photoPreview, ] = useState("/image2.png");
+    const [photoPreview] = useState("/image2.png");
 
     const form = useForm<InvestorFormValues>({
         resolver: zodResolver(investorFormSchema),
@@ -79,8 +77,8 @@ export default function EditInvestorProfile() {
     });
 
     function onSubmit(data: InvestorFormValues) {
-        console.log("clicked")
-        console.log(data)
+        console.log("clicked");
+        console.log(data);
         // toast({
         //     title: "You submitted the following values:",
         //     description: (
@@ -105,8 +103,8 @@ export default function EditInvestorProfile() {
                     <Form {...form}>
                         <form
                             onSubmit={() => {
-                                form.handleSubmit(onSubmit)
-                                console.log("trigger")
+                                form.handleSubmit(onSubmit);
+                                console.log("trigger");
                             }}
                             className="space-y-8"
                         >

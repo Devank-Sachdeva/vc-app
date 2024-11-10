@@ -1,5 +1,3 @@
-"use client";
-
 import { Trash2 } from "lucide-react";
 import { useForm, useFieldArray, Controller } from "react-hook-form";
 
@@ -170,15 +168,14 @@ export default function StartupProfileEdit() {
                 </CardHeader>
                 <CardContent className="space-y-4">
                     <div className="flex space-x-5 gap-4 space-y-2">
-                       
-                            <img
-                                src={""}
-                                alt={`logo`}
-                                width={100}
-                                height={100}
-                                className="rounded-full bg-red-300"
-                            />
-                        
+                        <img
+                            src={""}
+                            alt={`logo`}
+                            width={100}
+                            height={100}
+                            className="rounded-full bg-red-300"
+                        />
+
                         <div className="space-y-2 w-1/2">
                             <Label htmlFor="name">Startup Name</Label>
                             <Input
@@ -454,7 +451,9 @@ export default function StartupProfileEdit() {
                                     />
                                 </div>
                                 <div className="space-y-2">
-                                    <Label htmlFor={`founders.${index}.crunchbase`}>
+                                    <Label
+                                        htmlFor={`founders.${index}.crunchbase`}
+                                    >
                                         CrunchBase
                                     </Label>
                                     <Input

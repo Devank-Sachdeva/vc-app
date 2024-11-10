@@ -1,25 +1,19 @@
-"use client";
-
 import { useState } from "react";
 import {
     Briefcase,
     ChevronDown,
     ChevronUp,
     DollarSign,
-    Github,
     Globe,
     Linkedin,
     StickyNote,
     Twitter,
+    Building2,
+    BookOpenIcon,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import {
-    Card,
-    CardContent,
-    CardHeader,
-    CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
     Table,
     TableBody,
@@ -57,7 +51,7 @@ const startupData = {
             name: "John Smith",
             role: "CTO",
             linkedin: "https://linkedin.com/in/johnsmith",
-            github: "https://github.com/johnsmith",
+            crunchbase: "https://crunchbase.com/johnsmith",
         },
     ],
     socialLinks: {
@@ -219,9 +213,9 @@ export default function StartupProfile() {
                                 <img
                                     src={`/placeholder.svg?height=50&width=50&text=${founder.name[0]}`}
                                     alt={founder.name}
-                                    width={50}
-                                    height={50}
-                                    className="rounded-full"
+                                    width={75}
+                                    height={75}
+                                    className="rounded-full bg-red-300"
                                 />
                                 <div>
                                     <h3 className="font-semibold">
@@ -250,13 +244,13 @@ export default function StartupProfile() {
                                             </a>
                                         )}
 
-                                        {founder.github && (
+                                        {founder.crunchbase && (
                                             <a
-                                                href={founder.github}
+                                                href={founder.crunchbase}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                             >
-                                                <Github className="h-5 w-5" />
+                                                <BookOpenIcon className="h-5 w-5" />
                                             </a>
                                         )}
                                     </div>

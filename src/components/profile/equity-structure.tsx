@@ -1,5 +1,3 @@
-"use client";
-
 import { Pie, PieChart } from "recharts";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -79,18 +77,14 @@ export function EquityStructure() {
                                 minHeight: "100%",
                                 minWidth: "125px",
                                 fontSize: "1rem",
-                                
+
                                 marginRight: "3rem",
                                 maxWidth: "180px",
                                 overflow: "clip",
                                 display: "flex",
-                                flexDirection: "column", 
+                                flexDirection: "column",
                                 justifyContent: "center",
-                                
-                                
-                                
                             }}
-                            
                         />
                     </PieChart>
                 </ChartContainer>

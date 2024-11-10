@@ -1,5 +1,3 @@
-"use client";
-
 import { Button } from "@/components/ui/button";
 import {
     Card,
@@ -36,7 +34,7 @@ export const LoginCard = () => {
         defaultValues: {
             email: "meow@gmail.com",
             password: "password123",
-        }
+        },
     });
     const onSubmit = async (data: LoginFormValues) => {
         setIsLoading(true);
@@ -65,7 +63,6 @@ export const LoginCard = () => {
                                 id="email"
                                 type="email"
                                 placeholder="m@example.com"
-                                
                                 {...register("email")}
                             />
                             {errors.email && (

@@ -1,5 +1,3 @@
-"use client";
-
 import { useState } from "react";
 import {
     ChevronDown,
@@ -170,7 +168,6 @@ const startups = [
         unrealizedReturn: 3000000, // 86% gain
     },
 ];
-
 
 type SortKey = "name" | "amount" | "equity" | "date";
 
@@ -418,11 +415,13 @@ const Investments = () => {
                                                 UnrealisedToPercentage(
                                                     investor.amount,
                                                     investor.unrealizedReturn
-                                                ).charAt(0) !== '-' && "text-green-400",
+                                                ).charAt(0) !== "-" &&
+                                                    "text-green-400",
                                                 UnrealisedToPercentage(
                                                     investor.amount,
                                                     investor.unrealizedReturn
-                                                ).charAt(0) === '-' && "text-red-400",
+                                                ).charAt(0) === "-" &&
+                                                    "text-red-400",
                                             ])}
                                         >
                                             {UnrealisedToPercentage(

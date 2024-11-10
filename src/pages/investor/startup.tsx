@@ -1,6 +1,4 @@
-"use client";
-
-import{ useState } from "react";
+import { useState } from "react";
 import {
     ChevronDown,
     ChevronLeft,
@@ -54,7 +52,6 @@ const startups = [
     },
 ];
 
-
 const Startup = () => {
     const [searchTerm, setSearchTerm] = useState("");
     const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
@@ -98,7 +95,10 @@ const Startup = () => {
                                     <ChevronDown className="ml-2 h-4 w-4" />
                                 </Button>
                             </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end" className="w-56 overflow-y-auto max-h-[300px]">
+                            <DropdownMenuContent
+                                align="end"
+                                className="w-56 overflow-y-auto max-h-[300px]"
+                            >
                                 <DropdownMenuLabel>
                                     Startup Type
                                 </DropdownMenuLabel>
