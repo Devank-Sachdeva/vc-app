@@ -8,7 +8,6 @@ import {
     Linkedin,
     StickyNote,
     Twitter,
-    Building2,
     BookOpenIcon,
 } from "lucide-react";
 
