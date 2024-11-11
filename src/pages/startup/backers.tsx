@@ -106,11 +106,11 @@ const Backers = () => {
             return 0;
         });
 
-    const totalInvestment = filteredInvestors.reduce(
+    const totalInvestment = investors.reduce(
         (sum, investor) => sum + investor.amount,
         0
     );
-    const totalEquity = filteredInvestors.reduce(
+    const totalEquity = investors.reduce(
         (sum, investor) => sum + investor.equity,
         0
     );
@@ -159,7 +159,7 @@ const Backers = () => {
                                 Number of Investors
                             </h2>
                             <p className="text-2xl font-bold">
-                                {filteredInvestors.length}
+                                {investors.length}
                             </p>
                         </div>
                         <div className="p-4 border rounded-lg">
@@ -169,7 +169,7 @@ const Backers = () => {
                             <p className="text-2xl font-bold">
                                 {new Date(
                                     Math.max(
-                                        ...filteredInvestors.map((i) =>
+                                        ...investors.map((i) =>
                                             new Date(i.date).getTime()
                                         )
                                     )

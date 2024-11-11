@@ -32,23 +32,23 @@ import { useNavigate } from "react-router-dom";
 const startups = [
     {
         name: "Startup 1",
-        sales: "100,000",
-        last_round_valuation: "1,000,000",
+        sales: 100000,
+        last_round_valuation: 1000000,
         funding_round: "Seed",
-        tags: ["B2B", "AI", "Fintech", "Healthcare", "Analytics"],
+        tags: [ "AI", "Fintech", "Healthcare", "Analytics"],
     },
     {
         name: "Startup 2",
-        sales: "200,000",
-        last_round_valuation: "2,000,000",
-        funding_round: "SeriesA",
-        tags: ["B2C", "AI", "Fintech", "Healthcare", "Analytics"],
+        sales: 200000,
+        last_round_valuation: 2000000,
+        funding_round: "Series A",
+        tags: [ "AI", "Fintech", "Healthcare", "Analytics"],
     },
     {
         name: "Startup 3",
-        sales: "300,000",
-        last_round_valuation: "3,000,000",
-        funding_round: "SeriesB",
+        sales: 300000,
+        last_round_valuation: 3000000,
+        funding_round: "Series B",
         tags: ["Marketing", "SaaS", "Productivity", "Education", "Security"],
     },
 ];
@@ -141,7 +141,7 @@ const Startups = () => {
                             <TableBody>
                                 {filteredStartups.map((startup) => (
                                     <TableRow
-                                        key={startup.name}
+                                        key={startup.name + Math.random()}
                                         className="cursor-pointer"
                                         onClick={() =>
                                             navigate(
@@ -154,9 +154,9 @@ const Startups = () => {
                                         <TableCell className="font-medium">
                                             {startup.name}
                                         </TableCell>
-                                        <TableCell>${startup.sales}</TableCell>
+                                        <TableCell>${startup.sales.toLocaleString()}</TableCell>
                                         <TableCell>
-                                            ${startup.last_round_valuation}
+                                            ${startup.last_round_valuation.toLocaleString()}
                                         </TableCell>
                                         <TableCell>
                                             {startup.funding_round}

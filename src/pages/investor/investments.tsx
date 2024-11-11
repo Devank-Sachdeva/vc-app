@@ -203,11 +203,11 @@ const Investments = () => {
             return 0;
         });
 
-    const totalInvestment = filteredStartups.reduce(
+    const totalInvestment = startups.reduce(
         (sum, investor) => sum + investor.amount,
         0
     );
-    const totalEquity = filteredStartups.reduce(
+    const totalEquity = startups.reduce(
         (sum, investor) => sum + investor.equity,
         0
     );
@@ -261,7 +261,7 @@ const Investments = () => {
                                 Number of Investments
                             </h2>
                             <p className="text-2xl font-bold">
-                                {filteredStartups.length}
+                                {startups.length}
                             </p>
                         </div>
                         <div className="p-4 border rounded-lg">
@@ -271,7 +271,7 @@ const Investments = () => {
                             <p className="text-2xl font-bold">
                                 {new Date(
                                     Math.max(
-                                        ...filteredStartups.map((i) =>
+                                        ...startups.map((i) =>
                                             new Date(i.date).getTime()
                                         )
                                     )

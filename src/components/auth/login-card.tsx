@@ -32,7 +32,7 @@ export const LoginCard = () => {
     } = useForm<LoginFormValues>({
         resolver: zodResolver(loginSchema),
         defaultValues: {
-            email: "meow@gmail.com",
+            email: "test@gmail.com",
             password: "password123",
         },
     });

@@ -6,7 +6,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export enum FundingRound {
-    PreSeed = "Pre-Seed",
+    PreSeed = "Pre Seed",
     Seed = "Seed",
     SeriesA = "Series A",
     SeriesB = "Series B",

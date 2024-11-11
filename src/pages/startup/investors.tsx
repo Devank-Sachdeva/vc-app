@@ -127,6 +127,8 @@ export default function Investors() {
         return matchesSearch && matchesType;
     });
 
+    console.log(filteredInvestors);
+
     return (
         <div className="flex flex-col min-h-screen">
             <main className="flex-1 p-4 md:p-6">
@@ -201,7 +203,7 @@ export default function Investors() {
                             <TableBody>
                                 {filteredInvestors.map((investor) => (
                                     <TableRow
-                                        key={investor.name}
+                                        key={investor.name + Math.random()} 
                                         className="cursor-pointer"
                                         onClick={() =>
                                             navigate(
@@ -216,7 +218,7 @@ export default function Investors() {
                                         </TableCell>
                                         <TableCell>{investor.type}</TableCell>
                                         <TableCell>
-                                            {investor.investmentRange}
+                                            {investor.investmentRange} + {filteredInvestors.length}
                                         </TableCell>
                                         <TableCell>
                                             <div className="flex flex-wrap gap-1">
