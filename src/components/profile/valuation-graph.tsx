@@ -16,12 +16,12 @@ import {
     ChartTooltipContent,
 } from "@/components/ui/chart";
 const chartData = [
-    { point: "202", desktop: 186 },
-    { point: "February", desktop: 305 },
-    { point: "March", desktop: 237 },
-    { point: "April", desktop: 73 },
-    { point: "May", desktop: 209 },
-    { point: "June", desktop: 214 },
+    { point: "2023-Q3", desktop: 186 },
+    { point: "2023-Q4", desktop: 305 },
+    { point: "2024-Q1", desktop: 237 },
+    { point: "2024-Q2", desktop: 73 },
+    { point: "2024-Q3", desktop: 209 },
+    { point: "2024-Q4", desktop: 214 },
 ];
 
 const chartConfig = {
@@ -58,9 +58,7 @@ export function ValuationGraph() {
                             dataKey="point"
                             tickLine={false}
                             axisLine={false}
-                            tickMargin={8}
-                            tickFormatter={(value) => value.slice(0, value.length - 1)}
-                            
+                            tickMargin={8}                         
                         />
                         <ChartTooltip
                             cursor={false}

@@ -169,11 +169,9 @@ export default function StartupProfileEdit() {
                 <CardContent className="space-y-4">
                     <div className="flex space-x-5 gap-4 space-y-2">
                         <img
-                            src={""}
+                            src={"/avatar.png"}
                             alt={`logo`}
-                            width={100}
-                            height={100}
-                            className="rounded-full bg-red-300"
+                            className="rounded-full bg-red-300 h-[100px] w-[100px]"
                         />
 
                         <div className="space-y-2 w-1/2">

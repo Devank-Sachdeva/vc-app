@@ -46,7 +46,7 @@ const investorFormSchema = z.object({
 type InvestorFormValues = z.infer<typeof investorFormSchema>;
 
 export default function EditInvestorProfile() {
-    const [photoPreview] = useState("/image2.png");
+    const [photoPreview] = useState("/avatar.png");
 
     const form = useForm<InvestorFormValues>({
         resolver: zodResolver(investorFormSchema),
@@ -102,10 +102,7 @@ export default function EditInvestorProfile() {
                 <CardContent>
                     <Form {...form}>
                         <form
-                            onSubmit={() => {
-                                form.handleSubmit(onSubmit);
-                                console.log("trigger");
-                            }}
+                            onSubmit={() => form.handleSubmit(onSubmit)}
                             className="space-y-8"
                         >
                             <div className="flex">
