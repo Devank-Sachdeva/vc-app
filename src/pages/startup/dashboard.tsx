@@ -52,6 +52,106 @@ const investmentData = [
     },
 ];
 
+const swotData = [
+    {
+        value: "strengths",
+        items: [
+            "Strong product-market fit",
+            "Experienced leadership team",
+            "Innovative AI technology",
+        ],
+    },
+    {
+        value: "weaknesses",
+        items: [
+            "Limited market presence",
+            "High customer acquisition costs",
+            "Dependency on key personnel",
+        ],
+    },
+    {
+        value: "opportunities",
+        items: [
+            "Expand into new markets",
+            "Develop strategic partnerships",
+            "Introduce new product features",
+        ],
+    },
+    {
+        value: "threats",
+        items: [
+            "Increasing competition",
+            "Rapid technological changes",
+            "Economic uncertainties",
+        ],
+    },
+];
+
+const competitorsData = [
+    {
+        name: "DataMind Inc.",
+        marketShare: "15%",
+        strengths: "Established brand, wide product range",
+    },
+    {
+        name: "AI Insights Co.",
+        marketShare: "10%",
+        strengths: "Advanced AI algorithms, strong R&D",
+    },
+    {
+        name: "Quantum Analytics",
+        marketShare: "8%",
+        strengths: "Competitive pricing, good customer support",
+    },
+];
+
+const performanceData = [
+    {
+        title: "Product-Market Fit",
+        rating: "Strong",
+        ratingLevel: 2,
+    },
+    {
+        title: "Revenue Growth",
+        rating: "35% MoM",
+        ratingLevel: 2,
+    },
+    {
+        title: "Customer Acquisition Cost",
+        rating: "Moderate",
+        ratingLevel: 1,
+    },
+    {
+        title: "Churn Rate",
+        rating: "Low (2%)",
+        ratingLevel: 2,
+    },
+    {
+        title: "Team Expertise",
+        rating: "High",
+        ratingLevel: 2,
+    },
+];
+
+const metricsData =  {
+    "Estimated Valuation": {
+        value: "$2.5M",
+        description: "by the end of the quarter",
+    },
+    "Startup Health Score": {
+        value: "78/100",
+        description: "↑ 5 points from last month",
+    },
+    "Current Investors": {
+        value: "7",
+        description: "Total committed: $1.8M",
+    },
+    "Market Position": {
+        value: "Top 10%",
+        description: "In SaaS category",
+    },
+};
+
 const SDashboard = () => {
     return (
         <div className="flex flex-col w-full ">
@@ -65,9 +165,11 @@ const SDashboard = () => {
                             <CircleDollarSign className="w-4 h-4 text-muted-foreground" />
                         </CardHeader>
                         <CardContent>
-                            <div className="text-2xl font-bold">$2.5M</div>
+                            <div className="text-2xl font-bold">
+                                {metricsData["Estimated Valuation"].value}
+                            </div>
                             <p className="text-xs text-muted-foreground">
-                                by the end of the quarter
+                                {metricsData["Estimated Valuation"].description}
                             </p>
                         </CardContent>
                     </Card>
@@ -79,9 +181,14 @@ const SDashboard = () => {
                             <BarChart3 className="w-4 h-4 text-muted-foreground" />
                         </CardHeader>
                         <CardContent>
-                            <div className="text-2xl font-bold">78/100</div>
+                            <div className="text-2xl font-bold">
+                                {metricsData["Startup Health Score"].value}
+                            </div>
                             <p className="text-xs text-green-500">
-                                ↑ 5 points from last month
+                                {
+                                    metricsData["Startup Health Score"]
+                                        .description
+                                }
                             </p>
                         </CardContent>
                     </Card>
@@ -93,9 +200,11 @@ const SDashboard = () => {
                             <Users className="w-4 h-4 text-muted-foreground" />
                         </CardHeader>
                         <CardContent>
-                            <div className="text-2xl font-bold">7</div>
+                            <div className="text-2xl font-bold">
+                                {metricsData["Current Investors"].value}
+                            </div>
                             <p className="text-xs text-muted-foreground">
-                                Total committed: $1.8M
+                                {metricsData["Current Investors"].description}
                             </p>
                         </CardContent>
                     </Card>
@@ -107,9 +216,9 @@ const SDashboard = () => {
                             <PieChart className="w-4 h-4 text-muted-foreground" />
                         </CardHeader>
                         <CardContent>
-                            <div className="text-2xl font-bold">Top 10%</div>
+                            <div className="text-2xl font-bold">{metricsData["Market Position"].value}</div>
                             <p className="text-xs text-muted-foreground">
-                                In SaaS category
+                                {metricsData["Market Position"].description}
                             </p>
                         </CardContent>
                     </Card>
@@ -170,46 +279,38 @@ const SDashboard = () => {
                         </CardHeader>
                         <CardContent>
                             <div className="space-y-4">
-                                <div className="flex items-center justify-between">
-                                    <div className="text-sm font-medium">
-                                        Product-Market Fit
-                                    </div>
-                                    <div className="font-bold text-green-500">
-                                        Strong
-                                    </div>
-                                </div>
-                                <div className="flex items-center justify-between">
-                                    <div className="text-sm font-medium">
-                                        Revenue Growth
-                                    </div>
-                                    <div className="font-bold text-green-500">
-                                        35% MoM
-                                    </div>
-                                </div>
-                                <div className="flex items-center justify-between">
-                                    <div className="text-sm font-medium">
-                                        Customer Acquisition Cost
-                                    </div>
-                                    <div className="font-bold text-yellow-500">
-                                        Moderate
-                                    </div>
-                                </div>
-                                <div className="flex items-center justify-between">
-                                    <div className="text-sm font-medium">
-                                        Churn Rate
-                                    </div>
-                                    <div className="font-bold text-green-500">
-                                        Low (2%)
-                                    </div>
-                                </div>
-                                <div className="flex items-center justify-between">
-                                    <div className="text-sm font-medium">
-                                        Team Expertise
-                                    </div>
-                                    <div className="font-bold text-green-500">
-                                        High
-                                    </div>
-                                </div>
+                                {performanceData.map((indicator) => {
+                                    let colorClass = "";
+                                    switch (indicator.ratingLevel) {
+                                        case 0:
+                                            colorClass = "text-red-500";
+                                            break;
+                                        case 1:
+                                            colorClass = "text-yellow-500";
+                                            break;
+                                        case 2:
+                                            colorClass = "text-green-500";
+                                            break;
+                                        default:
+                                            colorClass = "text-gray-500"; // fallback if needed
+                                    }
+
+                                    return (
+                                        <div
+                                            key={indicator.title}
+                                            className="flex items-center justify-between"
+                                        >
+                                            <div className="text-sm font-medium">
+                                                {indicator.title}
+                                            </div>
+                                            <div
+                                                className={`font-bold ${colorClass}`}
+                                            >
+                                                {indicator.rating}
+                                            </div>
+                                        </div>
+                                    );
+                                })}
                             </div>
                         </CardContent>
                     </Card>
@@ -232,29 +333,19 @@ const SDashboard = () => {
                                     </TableRow>
                                 </TableHeader>
                                 <TableBody>
-                                    <TableRow>
-                                        <TableCell>DataMind Inc.</TableCell>
-                                        <TableCell>15%</TableCell>
-                                        <TableCell>
-                                            Established brand, wide product
-                                            range
-                                        </TableCell>
-                                    </TableRow>
-                                    <TableRow>
-                                        <TableCell>AI Insights Co.</TableCell>
-                                        <TableCell>10%</TableCell>
-                                        <TableCell>
-                                            Advanced AI algorithms, strong R&D
-                                        </TableCell>
-                                    </TableRow>
-                                    <TableRow>
-                                        <TableCell>Quantum Analytics</TableCell>
-                                        <TableCell>8%</TableCell>
-                                        <TableCell>
-                                            Competitive pricing, good customer
-                                            support
-                                        </TableCell>
-                                    </TableRow>
+                                    {competitorsData.map((competitor) => (
+                                        <TableRow key={competitor.name}>
+                                            <TableCell>
+                                                {competitor.name}
+                                            </TableCell>
+                                            <TableCell>
+                                                {competitor.marketShare}
+                                            </TableCell>
+                                            <TableCell>
+                                                {competitor.strengths}
+                                            </TableCell>
+                                        </TableRow>
+                                    ))}
                                 </TableBody>
                             </Table>
                         </CardContent>
@@ -278,46 +369,21 @@ const SDashboard = () => {
                                     </TabsTrigger>
                                     <TabsTrigger value="threats">T</TabsTrigger>
                                 </TabsList>
-                                <TabsContent
-                                    value="strengths"
-                                    className="space-y-4"
-                                >
-                                    <ul className="list-disc pl-4 space-y-2">
-                                        <li>Strong product-market fit</li>
-                                        <li>Experienced leadership team</li>
-                                        <li>Innovative AI technology</li>
-                                    </ul>
-                                </TabsContent>
-                                <TabsContent
-                                    value="weaknesses"
-                                    className="space-y-4"
-                                >
-                                    <ul className="list-disc pl-4 space-y-2">
-                                        <li>Limited market presence</li>
-                                        <li>High customer acquisition costs</li>
-                                        <li>Dependency on key personnel</li>
-                                    </ul>
-                                </TabsContent>
-                                <TabsContent
-                                    value="opportunities"
-                                    className="space-y-4"
-                                >
-                                    <ul className="list-disc pl-4 space-y-2">
-                                        <li>Expand into new markets</li>
-                                        <li>Develop strategic partnerships</li>
-                                        <li>Introduce new product features</li>
-                                    </ul>
-                                </TabsContent>
-                                <TabsContent
-                                    value="threats"
-                                    className="space-y-4"
-                                >
-                                    <ul className="list-disc pl-4 space-y-2">
-                                        <li>Increasing competition</li>
-                                        <li>Rapid technological changes</li>
-                                        <li>Economic uncertainties</li>
-                                    </ul>
-                                </TabsContent>
+                                {swotData.map((category) => (
+                                    <TabsContent
+                                        key={category.value}
+                                        value={category.value}
+                                        className="space-y-4"
+                                    >
+                                        <ul className="list-disc pl-4 space-y-2">
+                                            {category.items.map(
+                                                (item, index) => (
+                                                    <li key={index}>{item}</li>
+                                                )
+                                            )}
+                                        </ul>
+                                    </TabsContent>
+                                ))}
                             </Tabs>
                         </CardContent>
                     </Card>

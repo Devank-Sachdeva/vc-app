@@ -451,12 +451,19 @@ const Investments = () => {
                                     <TableCell colSpan={7}>
                                         <div className="flex justify-between">
                                             <div className="text-xs text-muted-foreground">
-                                                Showing <strong>1-5</strong> of{" "}
-                                                <strong>100</strong> results
+                                                Showing{" "}
+                                                <strong>
+                                                    1-{filteredStartups.length}
+                                                </strong>{" "}
+                                                of{" "}
+                                                <strong>
+                                                    {filteredStartups.length}
+                                                </strong>{" "}
+                                                results
                                             </div>
                                             <div className="flex bg-transparent">
                                                 <ChevronLeft className="mr-2 h-5 w-5 text-slate-300" />
-                                                <ChevronRight className="mr-2 h-5 w-5" />
+                                                <ChevronRight className="mr-2 h-5 w-5 text-slate-300" />
                                             </div>
                                         </div>
                                     </TableCell>

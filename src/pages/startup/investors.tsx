@@ -203,7 +203,7 @@ export default function Investors() {
                             <TableBody>
                                 {filteredInvestors.map((investor) => (
                                     <TableRow
-                                        key={investor.name + Math.random()} 
+                                        key={investor.name + Math.random()}
                                         className="cursor-pointer"
                                         onClick={() =>
                                             navigate(
@@ -218,7 +218,7 @@ export default function Investors() {
                                         </TableCell>
                                         <TableCell>{investor.type}</TableCell>
                                         <TableCell>
-                                            {investor.investmentRange} + {filteredInvestors.length}
+                                            {investor.investmentRange}
                                         </TableCell>
                                         <TableCell>
                                             <div className="flex flex-wrap gap-1">
@@ -242,12 +242,19 @@ export default function Investors() {
                                     <TableCell colSpan={4}>
                                         <div className="flex justify-between">
                                             <div className="text-xs text-muted-foreground">
-                                                Showing <strong>1-10</strong> of{" "}
-                                                <strong>100</strong> results
+                                                Showing{" "}
+                                                <strong>
+                                                    1-{filteredInvestors.length}
+                                                </strong>{" "}
+                                                of{" "}
+                                                <strong>
+                                                    {filteredInvestors.length}
+                                                </strong>{" "}
+                                                results
                                             </div>
                                             <div className="flex bg-transparent">
                                                 <ChevronLeft className="mr-2 h-5 w-5 text-slate-300" />
-                                                <ChevronRight className="mr-2 h-5 w-5" />
+                                                <ChevronRight className="mr-2 h-5 w-5 text-slate-300" />
                                             </div>
                                         </div>
                                     </TableCell>
