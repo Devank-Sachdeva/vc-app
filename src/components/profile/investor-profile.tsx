@@ -17,7 +17,7 @@ import { useNavigate } from "react-router-dom";
 export default function InvestorProfile({ isOwn = true }) {
     const investor = {
         name: "John Doe",
-        photo: "/placeholder.svg?height=200&width=200",
+        photo: "/john.png",
         bio: "Experienced angel investor with a passion for tech startups. 15+ years in venture capital, focusing on AI, blockchain, and sustainable energy solutions.Experienced angel investor with a passion for tech startups. 15+ years in venture capital, focusing on AI, blockchain, and sustainable energy solutions.Experienced angel investor with a passion for tech startups. 15+ years in venture capital, focusing on AI, blockchain, and sustainable energy solutions.Experienced angel investor with a passion for tech startups.",
         totalInvested: 1000000,
         averageInvestment: 50000,

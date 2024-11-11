@@ -11,35 +11,43 @@ import {
 } from "@/components/ui/chart";
 import { Users } from "lucide-react";
 const chartData = [
-    { browser: "chrome", visitors: 275, fill: "var(--color-chrome)" },
-    { browser: "safari", visitors: 200, fill: "var(--color-safari)" },
-    { browser: "firefox", visitors: 187, fill: "var(--color-firefox)" },
-    { browser: "edge", visitors: 173, fill: "var(--color-edge)" },
-    { browser: "other", visitors: 90, fill: "var(--color-other)" },
+    { holder: "janeDoe", equity: 30, fill: "var(--color-janeDoe)" },
+    { holder: "johnSmith", equity: 30, fill: "var(--color-johnSmith)" },
+    { holder: "acmeVentures", equity: 15, fill: "var(--color-acmeVentures)" },
+    {
+        holder: "techAcceleratorX",
+        equity: 5,
+        fill: "var(--color-techAcceleratorX)",
+    },
+    {
+        holder: "angelInvestorNetwork",
+        equity: 10,
+        fill: "var(--color-angelInvestorNetwork)",
+    },
 ];
 
 const chartConfig = {
-    visitors: {
-        label: "Visitors",
+    equity: {
+        label: "equity",
     },
-    chrome: {
-        label: "Chrome",
+    janeDoe: {
+        label: "Jane Doe",
         color: "hsl(var(--chart-1))",
     },
-    safari: {
-        label: "Safari",
+    johnSmith: {
+        label: "John Smith",
         color: "hsl(var(--chart-2))",
     },
-    firefox: {
-        label: "FirefoxFirefox",
+    acmeVentures: {
+        label: "Acme Ventures",
         color: "hsl(var(--chart-3))",
     },
-    edge: {
-        label: "Edge",
+    techAcceleratorX: {
+        label: "Tech Accelerator X",
         color: "hsl(var(--chart-4))",
     },
-    other: {
-        label: "Other",
+    angelInvestorNetwork: {
+        label: "Angel Investor Network",
         color: "hsl(var(--chart-5))",
     },
 } satisfies ChartConfig;
@@ -64,9 +72,9 @@ export function EquityStructure() {
                         />
                         <Pie
                             data={chartData}
-                            dataKey="visitors"
+                            dataKey="equity"
                             label
-                            nameKey="browser"
+                            nameKey="holder"
                         />
                         <ChartLegend
                             content={<ChartLegendContent />}
@@ -111,9 +119,9 @@ export function EquityStructure() {
 //                         />
 //                         <Pie
 //                             data={chartData}
-//                             dataKey="visitors"
+//                             dataKey="equity"
 //                             label
-//                             nameKey="browser"
+//                             nameKey="holder"
 //                         />
 //                     </PieChart>
 //                 </ChartContainer>
@@ -124,7 +132,7 @@ export function EquityStructure() {
 //                     <TrendingUp className="h-4 w-4" />
 //                 </div>
 //                 <div className="leading-none text-muted-foreground">
-//                     Showing total visitors for the last 6 months
+//                     Showing total equity for the last 6 months
 //                 </div>
 //             </CardFooter>
 //         </Card>

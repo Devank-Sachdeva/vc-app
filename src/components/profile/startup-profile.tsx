@@ -30,7 +30,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 const startupData = {
     name: "TechNova AI",
-    logo: "/placeholder.svg?height=100&width=100",
+    logo: "/startup.webp",
     pitch: "TechNova AI is revolutionizing the way businesses interact with their data. Our AI-powered analytics platform provides real-time insights and predictive modeling, enabling companies to make data-driven decisions faster and more accurately than ever before.TechNova AI is revolutionizing the way businesses interact with their data. Our AI-powered analytics platform provides real-time insights and predictive modeling, enabling companies to make data-driven decisions faster and more accurately than ever before.TechNova AI is revolutionizing the way businesses interact with their data. Our AI-powered analytics platform provides real-time insights and predictive modeling, enabling companies to make data-driven decisions faster and more accurately than ever before.",
     equityStructure: [
         { name: "Founders", value: 60 },
@@ -48,12 +48,14 @@ const startupData = {
             role: "CEO",
             linkedin: "https://linkedin.com/in/janedoe",
             twitter: "https://twitter.com/janedoe",
+            img: "jane.png"
         },
         {
             name: "John Smith",
             role: "CTO",
             linkedin: "https://linkedin.com/in/johnsmith",
             crunchbase: "https://crunchbase.com/johnsmith",
+            img: "john.png"
         },
     ],
     socialLinks: {
@@ -76,21 +78,21 @@ const startupData = {
 const similarStartups = [
     {
         name: "DataMind",
-        logo: "/placeholder.svg?height=50&width=50&text=DM",
+        logo: "/startup.webp",
         description: "AI-driven data analysis for enterprise",
         fundingStage: "Series B",
         totalFunding: "$15M",
     },
     {
         name: "Predicto",
-        logo: "/placeholder.svg?height=50&width=50&text=P",
+        logo: "/startup.webp",
         description: "Predictive analytics for e-commerce",
         fundingStage: "Series A",
         totalFunding: "$8M",
     },
     {
         name: "AInsights",
-        logo: "/placeholder.svg?height=50&width=50&text=AI",
+        logo: "/startup.webp",
         description: "AI-powered business intelligence platform",
         fundingStage: "Seed",
         totalFunding: "$2.5M",
@@ -253,7 +255,7 @@ export default function StartupProfile({isOwn = true}) {
                                 className="flex items-center space-x-4"
                             >
                                 <img
-                                    src={`/placeholder.svg?height=50&width=50&text=${founder.name[0]}`}
+                                    src={`/${founder.img}`}
                                     alt={founder.name}
                                     width={75}
                                     height={75}

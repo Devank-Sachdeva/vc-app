@@ -70,7 +70,7 @@ export const Header = () => {
                         <span className="sr-only">Toggle user menu</span>
                     </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
+                <DropdownMenuContent align="end" className="z-[999]">
                     <DropdownMenuItem
                         className="hover:cursor-pointer"
                         onClick={() => navigate("/investor/profile")}
