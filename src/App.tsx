@@ -162,7 +162,7 @@ function App() {
                                     alt="Venture founder"
                                     className="rounded-full"
                                     height="100"
-                                    src="/placeholder.svg"
+                                    src="/jane.png"
                                     style={{
                                         aspectRatio: "100/100",
                                         objectFit: "cover",
@@ -187,7 +187,7 @@ function App() {
                                     alt="Investor"
                                     className="rounded-full"
                                     height="100"
-                                    src="/placeholder.svg"
+                                    src="/john.png"
                                     style={{
                                         aspectRatio: "100/100",
                                         objectFit: "cover",
