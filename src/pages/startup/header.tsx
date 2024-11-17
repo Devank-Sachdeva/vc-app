@@ -58,6 +58,18 @@ export const Header = () => {
                 >
                     Backers
                 </Link>
+                <Link
+                    to="/startup/metrics"
+                    className={cn(
+                        "transition-colors hover:text-foreground text-muted-foreground",
+                        {
+                            "font-semibold text-foreground":
+                                location.pathname === "/startup/metrics",
+                        }
+                    )}
+                >
+                    Metrics
+                </Link>
             </nav>
 
             <DropdownMenu>

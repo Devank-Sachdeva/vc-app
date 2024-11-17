@@ -11,6 +11,7 @@ import {
     BookOpenIcon,
     Users,
     ArrowUpRight,
+    TrendingUp,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -27,6 +28,8 @@ import {
 import { ValuationGraph } from "@/components/profile/valuation-graph";
 import { EquityStructure } from "@/components/profile/equity-structure";
 import { Link, useNavigate } from "react-router-dom";
+import { MetricDialogBox } from "./metric-dialog-box";
+import GaugeChart from "./gauge-chart";
 
 const startupData = {
     name: "TechNova AI",
@@ -48,14 +51,14 @@ const startupData = {
             role: "CEO",
             linkedin: "https://linkedin.com/in/janedoe",
             twitter: "https://twitter.com/janedoe",
-            img: "jane.png"
+            img: "jane.png",
         },
         {
             name: "John Smith",
             role: "CTO",
             linkedin: "https://linkedin.com/in/johnsmith",
             crunchbase: "https://crunchbase.com/johnsmith",
-            img: "john.png"
+            img: "john.png",
         },
     ],
     socialLinks: {
@@ -99,7 +102,7 @@ const similarStartups = [
     },
 ];
 
-export default function StartupProfile({isOwn = true}) {
+export default function StartupProfile({ isOwn = true }) {
     const [isPitchExpanded, setIsPitchExpanded] = useState(false);
     const navigate = useNavigate();
 
@@ -146,7 +149,7 @@ export default function StartupProfile({isOwn = true}) {
                         </div>
                     </div>
                 </div>
-                <div className="text-right">
+                <div className="text-right flex flex-col">
                     <div className="text-[1.75rem] font-bold text-primary">
                         ${(startupData.currentFunding / 1000000).toFixed(1)}M
                     </div>
@@ -166,6 +169,25 @@ export default function StartupProfile({isOwn = true}) {
                             <ArrowUpRight className="w-5 h-5 ml-1" />
                         </div>
                     </Button>
+                    {isOwn && (
+                        <Button
+                            className="mt-2"
+                            variant={"outline"}
+                            size={"sm"}
+                            onClick={() => {
+                                if (isOwn) {
+                                    navigate("/startup/metrics");
+                                }
+                            }}
+                        >
+                            <div className="flex text-base items-center">
+                                View Metrics
+                                <TrendingUp className="w-5 h-5 ml-1" />
+                            </div>
+                        </Button>
+                    )}
+
+                    {!isOwn && <MetricDialogBox />}
                 </div>
             </div>
 
@@ -239,71 +261,73 @@ export default function StartupProfile({isOwn = true}) {
                     </CardContent>
                 </Card>
             </div>
+            <div className="grid md:grid-cols-2 gap-8">
+                <Card>
+                    <CardHeader>
+                        <CardTitle className="flex items-center">
+                            <Briefcase className="mr-2 h-5 w-5" />
+                            Founders
+                        </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <div className="grid md:grid-cols-2 gap-4">
+                            {startupData.founders.map((founder) => (
+                                <div
+                                    key={founder.name}
+                                    className="flex items-center space-x-4"
+                                >
+                                    <img
+                                        src={`/${founder.img}`}
+                                        alt={founder.name}
+                                        width={75}
+                                        height={75}
+                                        className="rounded-full bg-red-300"
+                                    />
+                                    <div>
+                                        <h3 className="font-semibold">
+                                            {founder.name}
+                                        </h3>
+                                        <p className="text-sm text-muted-foreground">
+                                            {founder.role}
+                                        </p>
+                                        <div className="flex space-x-2 mt-1">
+                                            {founder.linkedin && (
+                                                <a
+                                                    href={founder.linkedin}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                >
+                                                    <Linkedin className="h-5 w-5" />
+                                                </a>
+                                            )}
+                                            {founder.twitter && (
+                                                <a
+                                                    href={founder.twitter}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                >
+                                                    <Twitter className="h-5 w-5" />
+                                                </a>
+                                            )}
 
-            <Card>
-                <CardHeader>
-                    <CardTitle className="flex items-center">
-                        <Briefcase className="mr-2 h-5 w-5" />
-                        Founders
-                    </CardTitle>
-                </CardHeader>
-                <CardContent>
-                    <div className="grid md:grid-cols-2 gap-4">
-                        {startupData.founders.map((founder) => (
-                            <div
-                                key={founder.name}
-                                className="flex items-center space-x-4"
-                            >
-                                <img
-                                    src={`/${founder.img}`}
-                                    alt={founder.name}
-                                    width={75}
-                                    height={75}
-                                    className="rounded-full bg-red-300"
-                                />
-                                <div>
-                                    <h3 className="font-semibold">
-                                        {founder.name}
-                                    </h3>
-                                    <p className="text-sm text-muted-foreground">
-                                        {founder.role}
-                                    </p>
-                                    <div className="flex space-x-2 mt-1">
-                                        {founder.linkedin && (
-                                            <a
-                                                href={founder.linkedin}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                            >
-                                                <Linkedin className="h-5 w-5" />
-                                            </a>
-                                        )}
-                                        {founder.twitter && (
-                                            <a
-                                                href={founder.twitter}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                            >
-                                                <Twitter className="h-5 w-5" />
-                                            </a>
-                                        )}
-
-                                        {founder.crunchbase && (
-                                            <a
-                                                href={founder.crunchbase}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                            >
-                                                <BookOpenIcon className="h-5 w-5" />
-                                            </a>
-                                        )}
+                                            {founder.crunchbase && (
+                                                <a
+                                                    href={founder.crunchbase}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                >
+                                                    <BookOpenIcon className="h-5 w-5" />
+                                                </a>
+                                            )}
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        ))}
-                    </div>
-                </CardContent>
-            </Card>
+                            ))}
+                        </div>
+                    </CardContent>
+                </Card>
+                <GaugeChart value={9.2} />
+            </div>
             <ValuationGraph />
 
             {!isOwn && (

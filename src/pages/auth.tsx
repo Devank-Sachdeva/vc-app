@@ -8,6 +8,7 @@ function Auth() {
     
     useEffect(()=> {
         if (pathname === "/auth" || pathname === "/auth/") {
+            // console.log("test")
             navigate("/auth/login");
         }
     })
