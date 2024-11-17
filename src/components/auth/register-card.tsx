@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -53,6 +53,17 @@ export const RegisterCard = () => {
         },
     });
 
+    useEffect(() => {
+        const handlePopState = () => {
+            navigate("/", { replace: true });
+        };
+
+        window.addEventListener("popstate", handlePopState);
+
+        return () => {
+            window.removeEventListener("popstate", handlePopState);
+        };
+    }, [navigate]);
     const onSubmit = async (data: RegisterFormValues) => {
         setIsLoading(true);
         // Here you would typically send the data to your backend
@@ -62,10 +73,10 @@ export const RegisterCard = () => {
         setIsLoading(false);
         if (data.userType === "startup") {
             document.cookie = "token=1";
-            navigate("/startup/dashboard");
+            navigate("/startup/edit");
         } else {
             document.cookie = "token=2";
-            navigate("/investor/dashboard");
+            navigate("/investor/edit");
         }
     };
 
@@ -181,4 +192,4 @@ export const RegisterCard = () => {
             </CardContent>
         </Card>
     );
-}
+};
