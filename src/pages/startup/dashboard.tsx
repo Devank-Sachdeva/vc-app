@@ -24,6 +24,12 @@ import {
 } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import useStartupStore from "@/store/startup";
+import { Icons } from "@/components/ui/icons";
+import { InvestmentDetailsType } from "@/lib/investor-type";
+import { formatValuation } from "@/lib/utils";
 
 const investmentData = [
     {
@@ -133,7 +139,7 @@ const performanceData = [
     },
 ];
 
-const metricsData =  {
+const metricsData = {
     "Estimated Valuation": {
         value: "$2.5M",
         description: "by the end of the quarter",
@@ -153,6 +159,40 @@ const metricsData =  {
 };
 
 const SDashboard = () => {
+    const { startupDetails } = useStartupStore();
+
+    const [investors, setInvestors] = useState<InvestmentDetailsType[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        setIsLoading(true);
+        async function fetchInvestors() {
+            const response = await axios.post(
+                "http://127.0.0.1:5000/current-investors",
+                {
+                    startup_id: startupDetails.startupid,
+                }
+            );
+
+            setInvestors(response.data.investors);
+            setIsLoading(false);
+        }
+
+        fetchInvestors();
+    }, [startupDetails.startupid]);
+
+    const calculateTotalInvestment = (investors: InvestmentDetailsType[]) => {
+        return formatValuation(
+            investors
+                .reduce((acc, investor) => {
+                    return acc + investor.amount;
+                }, 0)
+                .toString()
+        );
+    };
+
+    console.log(startupDetails);
+    console.log(startupDetails.name);
     return (
         <div className="flex flex-col w-full ">
             <main className="flex-1 p-4 md:p-6">
@@ -166,10 +206,12 @@ const SDashboard = () => {
                         </CardHeader>
                         <CardContent>
                             <div className="text-2xl font-bold">
-                                {metricsData["Estimated Valuation"].value}
+                                {formatValuation(
+                                    startupDetails.estimated_valuation
+                                )}
                             </div>
                             <p className="text-xs text-muted-foreground">
-                                {metricsData["Estimated Valuation"].description}
+                                by the end of the quarter
                             </p>
                         </CardContent>
                     </Card>
@@ -182,13 +224,10 @@ const SDashboard = () => {
                         </CardHeader>
                         <CardContent>
                             <div className="text-2xl font-bold">
-                                {metricsData["Startup Health Score"].value}
+                                {startupDetails.rating} / 5
                             </div>
                             <p className="text-xs text-green-500">
-                                {
-                                    metricsData["Startup Health Score"]
-                                        .description
-                                }
+                                ↑ 1 points from last month
                             </p>
                         </CardContent>
                     </Card>
@@ -200,12 +239,20 @@ const SDashboard = () => {
                             <Users className="w-4 h-4 text-muted-foreground" />
                         </CardHeader>
                         <CardContent>
-                            <div className="text-2xl font-bold">
-                                {metricsData["Current Investors"].value}
-                            </div>
-                            <p className="text-xs text-muted-foreground">
-                                {metricsData["Current Investors"].description}
-                            </p>
+                            {isLoading && (
+                                <Icons.spinner className="mr-2 h-4 w-4 animate-spin justify-center items-center" />
+                            )}
+                            {!isLoading && (
+                                <>
+                                    <div className="text-2xl font-bold">
+                                        {investors.length}
+                                    </div>
+                                    <p className="text-xs text-muted-foreground">
+                                        Total committed:{" "}
+                                        {calculateTotalInvestment(investors)}
+                                    </p>
+                                </>
+                            )}
                         </CardContent>
                     </Card>
                     <Card>
@@ -216,9 +263,11 @@ const SDashboard = () => {
                             <PieChart className="w-4 h-4 text-muted-foreground" />
                         </CardHeader>
                         <CardContent>
-                            <div className="text-2xl font-bold">{metricsData["Market Position"].value}</div>
+                            <div className="text-2xl font-bold">
+                                {startupDetails.market_position}
+                            </div>
                             <p className="text-xs text-muted-foreground">
-                                {metricsData["Market Position"].description}
+                                In {startupDetails.domain} category
                             </p>
                         </CardContent>
                     </Card>
@@ -246,26 +295,31 @@ const SDashboard = () => {
                                         <TableHead>Investor</TableHead>
                                         <TableHead>Type</TableHead>
                                         <TableHead>Amount</TableHead>
-                                        <TableHead>Date</TableHead>
                                     </TableRow>
                                 </TableHeader>
                                 <TableBody>
-                                    {investmentData.map((investment, index) => (
-                                        <TableRow key={index}>
-                                            <TableCell>
-                                                {investment.investor}
-                                            </TableCell>
-                                            <TableCell>
-                                                {investment.type}
-                                            </TableCell>
-                                            <TableCell>
-                                                {investment.amount}
-                                            </TableCell>
-                                            <TableCell>
-                                                {investment.date}
-                                            </TableCell>
-                                        </TableRow>
-                                    ))}
+                                    {isLoading && (
+                                        <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                                    )}
+
+                                    {!isLoading &&
+                                        investors.map((investor) => (
+                                            <TableRow
+                                                key={investor.investmentid}
+                                            >
+                                                <TableCell>
+                                                    {investor.name}
+                                                </TableCell>
+                                                <TableCell>
+                                                    {investor.type}
+                                                </TableCell>
+                                                <TableCell>
+                                                    {formatValuation(
+                                                        investor.amount.toString()
+                                                    )}
+                                                </TableCell>
+                                            </TableRow>
+                                        ))}
                                 </TableBody>
                             </Table>
                         </CardContent>
@@ -369,18 +423,16 @@ const SDashboard = () => {
                                     </TabsTrigger>
                                     <TabsTrigger value="threats">T</TabsTrigger>
                                 </TabsList>
-                                {swotData.map((category) => (
+                                {swotData.map((category, index) => (
                                     <TabsContent
                                         key={category.value}
                                         value={category.value}
                                         className="space-y-4"
                                     >
                                         <ul className="list-disc pl-4 space-y-2">
-                                            {category.items.map(
-                                                (item, index) => (
-                                                    <li key={index}>{item}</li>
-                                                )
-                                            )}
+                                            <li>
+                                                {startupDetails.swot[index]}
+                                            </li>
                                         </ul>
                                     </TabsContent>
                                 ))}

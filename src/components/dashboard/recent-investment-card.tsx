@@ -16,6 +16,7 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
+import { InvestedStartupsType } from "@/lib/startup-type";
 
 const investments = [
     {
@@ -47,7 +48,7 @@ const investments = [
 
 function formatNumber(num: number): string {
     if (num >= 1000000) {
-        return (num / 1000000) + "M";
+        return (num / 1000000).toFixed(2) + "M";
     } else if (num >= 1000) {
         return (num / 1000).toFixed(0) + "K";
     } else {
@@ -55,15 +56,15 @@ function formatNumber(num: number): string {
     }
 }
 
-export function RecentInvestmentCard() {
+export function RecentInvestmentCard(investments: {
+    investments: InvestedStartupsType[];
+}) {
     return (
         <Card>
             <CardHeader className="flex flex-row items-center">
                 <div className="grid gap-2">
                     <CardTitle>Investments</CardTitle>
-                    <CardDescription>
-                        Recent Investments
-                    </CardDescription>
+                    <CardDescription>Recent Investments</CardDescription>
                 </div>
                 <Button asChild size="sm" className="ml-auto gap-1">
                     <Link to="/investor/investments">
@@ -81,22 +82,23 @@ export function RecentInvestmentCard() {
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {investments.map((e) => {return (
-                            <TableRow key={e.name}>
-                                <TableCell>
-                                    <div className="font-medium">
-                                        {e.name}
-                                    </div>
-                                    <div className="hidden text-sm text-muted-foreground md:inline">
-                                        $ {formatNumber(e.valuation)}
-                                    </div>
-                                </TableCell>
-                                <TableCell className="text-right">
-                                    $ {formatNumber(e.amount)}
-                                </TableCell>
-                            </TableRow>
-                        );})}
-                        
+                        {investments.investments.map((e) => {
+                            return (
+                                <TableRow key={e.name}>
+                                    <TableCell>
+                                        <div className="font-medium">
+                                            {e.name}
+                                        </div>
+                                        <div className="hidden text-sm text-muted-foreground md:inline">
+                                            $ {formatNumber(e.valuation)}
+                                        </div>
+                                    </TableCell>
+                                    <TableCell className="text-right">
+                                        $ {formatNumber(e.amount)}
+                                    </TableCell>
+                                </TableRow>
+                            );
+                        })}
                     </TableBody>
                 </Table>
             </CardContent>

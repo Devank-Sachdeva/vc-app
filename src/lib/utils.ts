@@ -64,3 +64,16 @@ export enum InvestorTypes {
     HedgeFund = "Hedge fund",
     Traders = "Traders",
 }
+
+export const formatValuation = (value: string) => {
+    const num = parseFloat(value);
+    if (isNaN(num)) return value;
+
+    if (num >= 1_000_000) {
+        return `${(num / 1_000_000).toFixed(1)} Million`;
+    } else if (num >= 1_000) {
+        return `${(num / 1_000).toFixed(1)}K`;
+    } else {
+        return num.toString();
+    }
+};

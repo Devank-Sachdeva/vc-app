@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
     Briefcase,
     ChevronDown,
@@ -27,9 +27,17 @@ import {
 
 import { ValuationGraph } from "@/components/profile/valuation-graph";
 import { EquityStructure } from "@/components/profile/equity-structure";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { MetricDialogBox } from "./metric-dialog-box";
 import GaugeChart from "./gauge-chart";
+import { InvestedStartupsType } from "@/lib/startup-type";
+import { InvestorDetailsType } from "@/lib/investor-type";
+import useUserStore from "@/store/id";
+import useInvestorStore from "@/store/investor";
+import axios from "axios";
+import useStartupStore from "@/store/startup";
+import { formatValuation } from "@/lib/utils";
+import { Icons } from "../ui/icons";
 
 const startupData = {
     name: "TechNova AI",
@@ -47,14 +55,14 @@ const startupData = {
     ],
     founders: [
         {
-            name: "Jane Doe",
+            name: "Arshneer Grover",
             role: "CEO",
             linkedin: "https://linkedin.com/in/janedoe",
             twitter: "https://twitter.com/janedoe",
             img: "jane.png",
         },
         {
-            name: "John Smith",
+            name: "Harry Smith",
             role: "CTO",
             linkedin: "https://linkedin.com/in/johnsmith",
             crunchbase: "https://crunchbase.com/johnsmith",
@@ -103,44 +111,80 @@ const similarStartups = [
 ];
 
 export default function StartupProfile({ isOwn = true }) {
+
+    const { startupDetails, setStartupDetails } = useStartupStore();
+
+    const { id } = useUserStore();
+
+    const [investors, setInvestors] = useState<InvestedStartupsType[]>([]);
+    const [isLoading, setLoading] = useState(true);
+    const location = useLocation();
+    useEffect(() => {
+        async function current() {
+            await axios
+                .post("http://localhost:5000/current-investors", {
+                    startup_id: id,
+                })
+                .then(async (res) => {
+                    console.log(res.data);
+                    setInvestors(res.data.investors);
+                    
+                    await axios
+                        .post("http://localhost:5000/startup-details", {
+                            startup_id: isOwn ? id :
+                                location.pathname.split("/")[
+                                    location.pathname.split("/").length - 1
+                                ],
+                        })
+                        .then((res) => {
+                            console.log(res.data);
+                            setStartupDetails(res.data);
+                            setLoading(false);
+                        });
+                });
+        }
+        current();
+    }, [id, isOwn, location]);
+
+    console.log(startupDetails)
     const [isPitchExpanded, setIsPitchExpanded] = useState(false);
     const navigate = useNavigate();
 
-    return (
+    return isLoading ? <Icons.spinner /> : (
         <div className="container mx-auto p-4 space-y-8">
             <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-4">
                     <img
-                        src={startupData.logo}
-                        alt={`${startupData.name} logo`}
+                        src={"/startup.webp"}
+                        alt={"startup.webp"}
                         width={100}
                         height={100}
                         className="rounded-full bg-red-300"
                     />
                     <div>
                         <h1 className="text-3xl font-bold">
-                            {startupData.name}
+                            {startupDetails?.name}
                         </h1>
                         <p className="text-muted-foreground">
-                            {startupData.fundingRound}
+                            {startupDetails?.funding_stage}
                         </p>
                         <div className="flex space-x-4 pt-2">
                             <a
-                                href={startupData.socialLinks.website}
+                                href={startupDetails?.social_links[0]}
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
                                 <Globe className="h-6 w-6" />
                             </a>
                             <a
-                                href={startupData.socialLinks.linkedin}
+                                href={startupDetails?.social_links[0]}
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
                                 <Linkedin className="h-6 w-6" />
                             </a>
                             <a
-                                href={startupData.socialLinks.twitter}
+                                href={startupDetails?.social_links[1]}
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
@@ -151,7 +195,8 @@ export default function StartupProfile({ isOwn = true }) {
                 </div>
                 <div className="text-right flex flex-col">
                     <div className="text-[1.75rem] font-bold text-primary">
-                        ${(startupData.currentFunding / 1000000).toFixed(1)}M
+                        $
+                        {formatValuation(startupData.currentFunding.toString())}
                     </div>
                     <p className="text-muted-foreground text-sm mb-1">
                         Current Funding
@@ -200,7 +245,7 @@ export default function StartupProfile({ isOwn = true }) {
                 </CardHeader>
                 <CardContent>
                     <p className={`${isPitchExpanded ? "" : "line-clamp-3"}`}>
-                        {startupData.pitch}
+                        {startupDetails?.pitch}
                     </p>
                     <Button
                         variant="ghost"
@@ -222,7 +267,7 @@ export default function StartupProfile({ isOwn = true }) {
             </Card>
 
             <div className="grid md:grid-cols-2 gap-8">
-                <EquityStructure />
+                <EquityStructure data={startupDetails?.equity_structure} />
 
                 <Card>
                     <CardHeader>
@@ -241,21 +286,24 @@ export default function StartupProfile({ isOwn = true }) {
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                                {startupData.currentInvestors.map(
-                                    (investor) => (
-                                        <TableRow key={investor.name}>
-                                            <TableCell>
-                                                {investor.name}
-                                            </TableCell>
-                                            <TableCell>
-                                                {investor.amount}
-                                            </TableCell>
-                                            <TableCell>
-                                                {investor.equity}
-                                            </TableCell>
-                                        </TableRow>
-                                    )
-                                )}
+                                {investors?.map((investor) => (
+                                    <TableRow key={investor.name}>
+                                        <TableCell>{investor.name}</TableCell>
+                                        <TableCell>
+                                            {formatValuation(
+                                                investor.amount.toString()
+                                            )}
+                                        </TableCell>
+                                        <TableCell>
+                                            {(
+                                                (investor.amount /
+                                                    investor.valuation) *
+                                                100
+                                            ).toFixed(2)}{" "}
+                                            %
+                                        </TableCell>
+                                    </TableRow>
+                                ))}
                             </TableBody>
                         </Table>
                     </CardContent>
@@ -326,7 +374,7 @@ export default function StartupProfile({ isOwn = true }) {
                         </div>
                     </CardContent>
                 </Card>
-                <GaugeChart value={9.2} />
+                <GaugeChart value={startupDetails?.rating * 2} />
             </div>
             <ValuationGraph />
 
@@ -346,7 +394,7 @@ export default function StartupProfile({ isOwn = true }) {
                                     className="flex flex-col items-center space-y-4 bg-gray-100 dark:bg-gray-800 p-6 rounded-lg text-center"
                                 >
                                     <img
-                                        src={startup.logo}
+                                        src={"/startup.webp"}
                                         alt={`${startup.name} logo`}
                                         width={50}
                                         height={50}

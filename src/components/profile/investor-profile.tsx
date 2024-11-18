@@ -3,6 +3,11 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { InvestedStartupsType } from "@/lib/startup-type";
+import { formatValuation } from "@/lib/utils";
+import useUserStore from "@/store/id";
+import useInvestorStore from "@/store/investor";
+import axios from "axios";
 import {
     LinkedinIcon,
     GlobeIcon,
@@ -12,9 +17,45 @@ import {
     ArrowUpRight,
     ChartNoAxesCombined,
 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Icons } from "../ui/icons";
 
 export default function InvestorProfile({ isOwn = true }) {
+    const { investorDetails, setInvestorDetails } = useInvestorStore();
+
+    const { id } = useUserStore();
+
+    const [startups, setStartups] = useState<InvestedStartupsType[]>([]);
+    const [isLoading, setLoading] = useState(true);
+    const location = useLocation();
+    useEffect(() => {
+        async function current() {
+            await axios
+                .post("http://localhost:5000/invested-startups", {
+                    investor_id: id,
+                })
+                .then((res) => {
+                    console.log(res.data);
+                    setStartups(res.data.startups);
+                });
+
+            await axios
+                .post("http://localhost:5000/investor-details", {
+                    investor_id: isOwn
+                        ? id
+                        : location.pathname.split("/")[
+                              location.pathname.split("/").length - 1
+                          ],
+                })
+                .then((res) => {
+                    console.log(res.data);
+                    setInvestorDetails(res.data.investor_details);
+                    setLoading(false);
+                });
+        }
+        current();
+    }, [id, isOwn,location.pathname]);
     const investor = {
         name: "John Doe",
         photo: "/john.png",
@@ -55,31 +96,24 @@ export default function InvestorProfile({ isOwn = true }) {
 
     const navigate = useNavigate();
 
-    return (
+    return isLoading ? <Icons.spinner /> :  (
         <div className="w-[80%] mx-auto px-4 py-8 h-auto">
             <Card className="w-full mx-auto">
                 <CardHeader className="flex flex-col sm:flex-row items-center gap-6 pb-6">
                     <Avatar className="w-32 h-32">
-                        <AvatarImage src={investor.photo} alt={investor.name} />
-                        <AvatarFallback>
-                            {investor.name
-                                .split(" ")
-                                .map((n) => n[0])
-                                .join("")}
-                        </AvatarFallback>
+                        <AvatarImage src={investor.photo} alt={"/john.png"} />
+                        <AvatarFallback>{investorDetails.name}</AvatarFallback>
                     </Avatar>
                     <div className="text-center sm:text-left w-full">
                         <div className="flex justify-between">
                             <CardTitle className="text-3xl font-bold mb-2 flex justify-between w-full">
-                                {investor.name}
+                                {investorDetails.name}
                                 <div>
                                     <Button
                                         size={"sm"}
                                         onClick={() => {
                                             if (isOwn) {
-                                                navigate(
-                                                    "/investor/edit"
-                                                );
+                                                navigate("/investor/edit");
                                             }
                                         }}
                                     >
@@ -91,7 +125,9 @@ export default function InvestorProfile({ isOwn = true }) {
                                 </div>
                             </CardTitle>
                         </div>
-                        <p className="text-muted-foreground ">{investor.bio}</p>
+                        <p className="text-muted-foreground ">
+                            {investorDetails.description}
+                        </p>
                     </div>
                 </CardHeader>
                 <CardContent className="grid gap-6">
@@ -107,8 +143,7 @@ export default function InvestorProfile({ isOwn = true }) {
                                         Average Investment Size
                                     </CardTitle>
                                     <p className="text-muted-foreground">
-                                        $
-                                        {investor.averageInvestment.toLocaleString()}
+                                        ${investorDetails.investment_range}
                                     </p>
                                 </CardContent>
                             </Card>
@@ -118,8 +153,10 @@ export default function InvestorProfile({ isOwn = true }) {
                                         Total Amount Invested
                                     </CardTitle>
                                     <p className="text-muted-foreground">
-                                        $
-                                        {investor.totalInvested.toLocaleString()}
+                                        ${" "}
+                                        {formatValuation(
+                                            investorDetails.total_investment.toString()
+                                        )}
                                     </p>
                                 </CardContent>
                             </Card>
@@ -132,14 +169,14 @@ export default function InvestorProfile({ isOwn = true }) {
                             Investments
                         </h2>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            {investor.investments.map((investment, index) => (
+                            {startups.map((investment, index) => (
                                 <Card key={index}>
                                     <CardContent className="p-4">
                                         <CardTitle className="text-lg mb-1">
                                             {investment.name}
                                         </CardTitle>
                                         <p className="text-sm text-muted-foreground">
-                                            {investment.industry}
+                                            {investment.domain}
                                         </p>
                                     </CardContent>
                                 </Card>
@@ -155,7 +192,7 @@ export default function InvestorProfile({ isOwn = true }) {
                             Interests
                         </h2>
                         <div className="flex flex-wrap gap-2">
-                            {investor.interests.map((interest, index) => (
+                            {investorDetails.domains.map((interest, index) => (
                                 <Badge key={index} variant="secondary">
                                     {interest}
                                 </Badge>

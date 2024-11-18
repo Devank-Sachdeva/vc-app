@@ -22,8 +22,8 @@ const registerSchema = z
         userType: z.enum(["startup", "investor"], {
             required_error: "You must select a user type",
         }),
-        email: z.string().email("Invalid email address"),
-        password: z.string().min(8, "Password must be at least 8 characters"),
+        username: z.string().min(6,"Invalid username address"),
+        password: z.string().min(6, "Password must be at least 8 characters"),
         confirmPassword: z
             .string()
             .min(8, "Password must be at least 8 characters"),
@@ -47,7 +47,7 @@ export const RegisterCard = () => {
         resolver: zodResolver(registerSchema),
         defaultValues: {
             userType: "startup",
-            email: "test@gmail.com",
+            username: "test@gmail.com",
             password: "password123",
             confirmPassword: "password123",
         },
@@ -126,15 +126,15 @@ export const RegisterCard = () => {
                             )}
                         </div>
                         <div className="flex flex-col space-y-1.5">
-                            <Label htmlFor="email">Email</Label>
+                            <Label htmlFor="username">username</Label>
                             <Input
-                                id="email"
-                                type="email"
-                                {...register("email")}
+                                id="username"
+                                type="username"
+                                {...register("username")}
                             />
-                            {errors.email && (
+                            {errors.username && (
                                 <p className="text-sm text-red-500">
-                                    {errors.email.message}
+                                    {errors.username.message}
                                 </p>
                             )}
                         </div>

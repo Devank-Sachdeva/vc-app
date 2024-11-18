@@ -64,10 +64,6 @@ const router = createBrowserRouter([
                 path: "/investor/profile",
                 element: <IProfile />,
             },
-            {
-                path: "/investor/edit",
-                element: <Edit />,
-            },
         ],
     },
     {
@@ -97,15 +93,20 @@ const router = createBrowserRouter([
                 path: "/startup/profile",
                 element: <SProfile />,
             },
-            {
-                path: "/startup/edit",
-                element: <StartupProfileEdit />,
-            },
+
             {
                 path: "/startup/metrics",
                 element: <StartupMetrics />,
             },
         ],
+    },
+    {
+        path: "/startup/edit",
+        element: <StartupProfileEdit />,
+    },
+    {
+        path: "/investor/edit",
+        element: <Edit />,
     },
 ]);
 

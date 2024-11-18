@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
     ChevronDown,
     ChevronLeft,
@@ -30,54 +30,58 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import { useNavigate } from "react-router-dom";
+import { InvestmentDetailsType } from "@/lib/investor-type";
+import useStartupStore from "@/store/startup";
+import axios from "axios";
+import { FundingRound } from "@/lib/utils";
 
-const investors = [
-    {
-        name: "Acme Ventures",
-        type: "Venture Capital",
-        amount: 1000000,
-        equity: 10,
-        date: "2023-01-15",
-        stage: "Series A",
-        boardSeat: true,
-    },
-    {
-        name: "John Doe",
-        type: "Angel Investor",
-        amount: 250000,
-        equity: 2.5,
-        date: "2023-03-20",
-        stage: "Seed",
-        boardSeat: false,
-    },
-    {
-        name: "Tech Accelerator X",
-        type: "Accelerator",
-        amount: 150000,
-        equity: 7,
-        date: "2022-06-10",
-        stage: "Pre-seed",
-        boardSeat: false,
-    },
-    {
-        name: "Future Fund",
-        type: "Corporate Venture Capital",
-        amount: 2000000,
-        equity: 15,
-        date: "2023-09-05",
-        stage: "Series B",
-        boardSeat: true,
-    },
-    {
-        name: "Growth Partners LLC",
-        type: "Private Equity",
-        amount: 5000000,
-        equity: 20,
-        date: "2024-02-28",
-        stage: "Series C",
-        boardSeat: true,
-    },
-];
+// const investors = [
+//     {
+//         name: "Acme Ventures",
+//         type: "Venture Capital",
+//         amount: 1000000,
+//         equity: 10,
+//         date: "2023-01-15",
+//         stage: "Series A",
+//         boardSeat: true,
+//     },
+//     {
+//         name: "John Doe",
+//         type: "Angel Investor",
+//         amount: 250000,
+//         equity: 2.5,
+//         date: "2023-03-20",
+//         stage: "Seed",
+//         boardSeat: false,
+//     },
+//     {
+//         name: "Tech Accelerator X",
+//         type: "Accelerator",
+//         amount: 150000,
+//         equity: 7,
+//         date: "2022-06-10",
+//         stage: "Pre-seed",
+//         boardSeat: false,
+//     },
+//     {
+//         name: "Future Fund",
+//         type: "Corporate Venture Capital",
+//         amount: 2000000,
+//         equity: 15,
+//         date: "2023-09-05",
+//         stage: "Series B",
+//         boardSeat: true,
+//     },
+//     {
+//         name: "Growth Partners LLC",
+//         type: "Private Equity",
+//         amount: 5000000,
+//         equity: 20,
+//         date: "2024-02-28",
+//         stage: "Series C",
+//         boardSeat: true,
+//     },
+// ];
 
 type SortKey = "name" | "amount" | "equity" | "date";
 
@@ -87,6 +91,28 @@ const Backers = () => {
     const [sortKey, setSortKey] = useState<SortKey>("date");
     const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
     const navigate = useNavigate();
+
+    const { startupDetails } = useStartupStore();
+
+    const [investors, setInvestors] = useState<InvestmentDetailsType[]>([]);
+    const [, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        setIsLoading(true);
+        async function fetchInvestors() {
+            const response = await axios.post(
+                "http://127.0.0.1:5000/current-investors",
+                {
+                    startup_id: startupDetails.startupid,
+                }
+            );
+
+            setInvestors(response.data.investors);
+            setIsLoading(false);
+        }
+
+        fetchInvestors();
+    }, [startupDetails.startupid]);
 
     const filteredInvestors = investors
         .filter((investor) => {
@@ -100,18 +126,13 @@ const Backers = () => {
                 selectedTypes.includes(investor.type);
             return matchesSearch && matchesType;
         })
-        .sort((a, b) => {
-            if (a[sortKey] < b[sortKey]) return sortOrder === "asc" ? -1 : 1;
-            if (a[sortKey] > b[sortKey]) return sortOrder === "asc" ? 1 : -1;
-            return 0;
-        });
 
     const totalInvestment = investors.reduce(
         (sum, investor) => sum + investor.amount,
         0
     );
     const totalEquity = investors.reduce(
-        (sum, investor) => sum + investor.equity,
+        (sum, investor) => sum + ((investor.amount/ investor.valuation) * 100),
         0
     );
 
@@ -313,16 +334,31 @@ const Backers = () => {
                                             ${investor.amount.toLocaleString()}
                                         </TableCell>
                                         <TableCell className="">
-                                            {investor.equity}%
+                                            {((investor.amount /
+                                                investor.valuation) *
+                                                100).toFixed(2)}
+                                            %
                                         </TableCell>
                                         <TableCell>
                                             {new Date(
                                                 investor.date
                                             ).toLocaleDateString("en-GB")}
                                         </TableCell>
-                                        <TableCell>{investor.stage}</TableCell>
                                         <TableCell>
-                                            {investor.boardSeat ? "Yes" : "No"}
+                                            {
+                                                Object.values(FundingRound)[
+                                                    Math.floor(
+                                                        Math.random() * Object.values(FundingRound).length
+                                                    )
+                                                ]
+                                            }
+                                        </TableCell>
+                                        <TableCell>
+                                            {investor.amount /
+                                                investor.valuation >
+                                            0.2
+                                                ? "Yes"
+                                                : "No"}
                                         </TableCell>
                                     </TableRow>
                                 ))}

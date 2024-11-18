@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
     ChevronDown,
     ChevronLeft,
@@ -29,8 +29,11 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import { cn } from "@/lib/utils";
+import { cn, formatValuation, FundingRound } from "@/lib/utils";
 import { useNavigate } from "react-router-dom";
+import { InvestedStartupsType } from "@/lib/startup-type";
+import useUserStore from "@/store/id";
+import axios from "axios";
 
 const startups = [
     {
@@ -173,6 +176,24 @@ const startups = [
 type SortKey = "name" | "amount" | "equity" | "date";
 
 const Investments = () => {
+    const { id } = useUserStore();
+
+    const [startups, setStartups] = useState<InvestedStartupsType[]>([]);
+    const [isLoading, setLoading] = useState(true);
+    useEffect(() => {
+        async function current() {
+            await axios
+                .post("http://localhost:5000/invested-startups", {
+                    investor_id: id,
+                })
+                .then((res) => {
+                    console.log(res.data);
+                    setStartups(res.data.startups);
+                    setLoading(false);
+                });
+        }
+        current();
+    }, [id]);
     const [searchTerm, setSearchTerm] = useState("");
     const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
     const [sortKey, setSortKey] = useState<SortKey>("date");
@@ -187,28 +208,28 @@ const Investments = () => {
         return `${percentage.toFixed(2)}%`;
     }
 
-    const filteredStartups = startups
-        .filter((startup) => {
-            const matchesSearch =
-                startup.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                startup.stage.toLowerCase().includes(searchTerm.toLowerCase());
-            const matchesType =
-                selectedTypes.length === 0 ||
-                selectedTypes.includes(startup.stage);
-            return matchesSearch && matchesType;
-        })
-        .sort((a, b) => {
-            if (a[sortKey] < b[sortKey]) return sortOrder === "asc" ? -1 : 1;
-            if (a[sortKey] > b[sortKey]) return sortOrder === "asc" ? 1 : -1;
-            return 0;
-        });
+    const filteredStartups = startups.filter((startup) => {
+        const matchesSearch = startup.name
+            .toLowerCase()
+            .includes(searchTerm.toLowerCase());
+        //     startup.stage.toLowerCase().includes(searchTerm.toLowerCase());
+        // const matchesType =
+        //     selectedTypes.length === 0 ||
+        //     selectedTypes.includes(startup.stage);
+        return matchesSearch;
+    });
+    // .sort((a, b) => {
+    //     if (a[sortKey] < b[sortKey]) return sortOrder === "asc" ? -1 : 1;
+    //     if (a[sortKey] > b[sortKey]) return sortOrder === "asc" ? 1 : -1;
+    //     return 0;
+    // });
 
     const totalInvestment = startups.reduce(
         (sum, investor) => sum + investor.amount,
         0
     );
     const totalEquity = startups.reduce(
-        (sum, investor) => sum + investor.equity,
+        (sum, startup) => sum + (startup.amount / startup.valuation) * 100,
         0
     );
 
@@ -303,9 +324,7 @@ const Investments = () => {
                                     Investor Type
                                 </DropdownMenuLabel>
                                 <DropdownMenuSeparator />
-                                {Array.from(
-                                    new Set(startups.map((i) => i.stage))
-                                ).map((type) => (
+                                {Object.values(FundingRound).map((type) => (
                                     <DropdownMenuCheckboxItem
                                         key={type}
                                         checked={selectedTypes.includes(type)}
@@ -410,11 +429,27 @@ const Investments = () => {
                                                 {startup.name}
                                             </p>
                                         </TableCell>
-                                        <TableCell>{startup.stage}</TableCell>
+                                        <TableCell>
+                                            {startup.funding_stage}
+                                        </TableCell>
                                         <TableCell>
                                             ${startup.amount.toLocaleString()}
                                         </TableCell>
-                                        <TableCell>{startup.equity}%</TableCell>
+                                        <TableCell>
+                                            {(startup.amount /
+                                                startup.valuation) *
+                                                100 >
+                                            100
+                                                ? (
+                                                      (startup.amount /
+                                                          startup.valuation) *
+                                                      10
+                                                  ).toFixed(2)
+                                                : ((startup.amount /
+                                                      startup.valuation) *
+                                                  100).toFixed(2)}
+                                            %
+                                        </TableCell>
                                         <TableCell>
                                             {new Date(
                                                 startup.date
@@ -422,25 +457,33 @@ const Investments = () => {
                                         </TableCell>
                                         <TableCell>
                                             $
-                                            {startup.currentValuation.toLocaleString()}
+                                            {formatValuation(
+                                                startup.estimated_valuation
+                                            )}
                                         </TableCell>
                                         <TableCell
                                             className={cn([
                                                 UnrealisedToPercentage(
-                                                    startup.amount,
-                                                    startup.unrealizedReturn
+                                                    startup.valuation,
+                                                    parseFloat(
+                                                        startup.estimated_valuation
+                                                    )
                                                 ).charAt(0) !== "-" &&
                                                     "text-green-400",
                                                 UnrealisedToPercentage(
                                                     startup.amount,
-                                                    startup.unrealizedReturn
+                                                    parseFloat(
+                                                        startup.estimated_valuation
+                                                    )
                                                 ).charAt(0) === "-" &&
                                                     "text-red-400",
                                             ])}
                                         >
                                             {UnrealisedToPercentage(
                                                 startup.amount,
-                                                startup.unrealizedReturn
+                                                parseFloat(
+                                                    startup.estimated_valuation
+                                                )
                                             )}
                                         </TableCell>
                                     </TableRow>

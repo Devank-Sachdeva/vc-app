@@ -1,14 +1,16 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { Header as IHeader } from "../pages/investor/header" ;
+import { Header as IHeader } from "../pages/investor/header";
 import { Header as SHeader } from "../pages/startup/header";
+import useUserStore from "@/store/id";
 
 const PrivateRoutes = () => {
-    const auth = document.cookie;
-    return auth.includes("token=") ? (
+    const { user } = useUserStore();
+
+    return user !== null ? (
         <>
-            {auth.charAt(auth.length - 1) === '1' && <SHeader />}
-            {auth.charAt(auth.length - 1) === '2' && <IHeader />}
-            <div className="max-h-[calc(100vh-64px)] ">
+            {user === "startup" && <SHeader />}
+            {user === "investor" && <IHeader />}
+            <div className="max-h-[calc(100vh-64px)]">
                 <Outlet />
             </div>
         </>

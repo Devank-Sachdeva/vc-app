@@ -10,49 +10,72 @@ import {
     ChartTooltipContent,
 } from "@/components/ui/chart";
 import { Users } from "lucide-react";
-const chartData = [
-    { holder: "janeDoe", equity: 30, fill: "var(--color-janeDoe)" },
-    { holder: "johnSmith", equity: 30, fill: "var(--color-johnSmith)" },
-    { holder: "acmeVentures", equity: 15, fill: "var(--color-acmeVentures)" },
-    {
-        holder: "techAcceleratorX",
-        equity: 5,
-        fill: "var(--color-techAcceleratorX)",
-    },
-    {
-        holder: "angelInvestorNetwork",
-        equity: 10,
-        fill: "var(--color-angelInvestorNetwork)",
-    },
+// const chartData = [
+//     { holder: "janeDoe", equity: , fill: "var(--color-janeDoe)" },
+//     { holder: "johnSmith", equity: 30, fill: "var(--color-johnSmith)" },
+//     { holder: "acmeVentures", equity: 15, fill: "var(--color-acmeVentures)" },
+//     {
+//         holder: "techAcceleratorX",
+//         equity: 5,
+//         fill: "var(--color-techAcceleratorX)",
+//     },
+//     {
+//         holder: "angelInvestorNetwork",
+//         equity: 10,
+//         fill: "var(--color-angelInvestorNetwork)",
+//     },
+// ];
+
+// const chartConfig = {
+//     equity: {
+//         label: "equity",
+//     },
+//     janeDoe: {
+//         label: "Jane Doe",
+//         color: "hsl(var(--chart-1))",
+//     },
+//     johnSmith: {
+//         label: "John Smith",
+//         color: "hsl(var(--chart-2))",
+//     },
+//     acmeVentures: {
+//         label: "Acme Ventures",
+//         color: "hsl(var(--chart-3))",
+//     },
+// } satisfies ChartConfig;
+
+export function EquityStructure({
+    data,
+}: {
+    data: {
+        "Founder-1": number;
+        "Founder-2": number;
+        Investor: number;
+    };
+}) {
+    const chartData = [
+    { holder: "ashneergrover", equity: data["Founder-1"], fill: "hsl(var(--chart-1))" },
+    { holder: "harrysmith", equity: data["Founder-2"], fill: "hsl(var(--chart-2))" },
+    { holder: "acmeVentures", equity: 100 - data["Founder-1"] - data["Founder-2"], fill: "hsl(var(--chart-3))" },
 ];
 
 const chartConfig = {
     equity: {
         label: "equity",
     },
-    janeDoe: {
-        label: "Jane Doe",
+    ashneergrover: {
+        label: "Arshneer Grover",
         color: "hsl(var(--chart-1))",
     },
-    johnSmith: {
-        label: "John Smith",
+    harrysmith: {
+        label: "Harry Smith",
         color: "hsl(var(--chart-2))",
     },
     acmeVentures: {
         label: "Acme Ventures",
         color: "hsl(var(--chart-3))",
     },
-    techAcceleratorX: {
-        label: "Tech Accelerator X",
-        color: "hsl(var(--chart-4))",
-    },
-    angelInvestorNetwork: {
-        label: "Angel Investor Network",
-        color: "hsl(var(--chart-5))",
-    },
 } satisfies ChartConfig;
-
-export function EquityStructure() {
     return (
         <Card className="flex flex-col">
             <CardHeader className=" pb-0">

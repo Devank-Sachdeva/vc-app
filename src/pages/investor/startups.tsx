@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
     ChevronDown,
     ChevronLeft,
@@ -26,8 +26,12 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import { StartupTags } from "@/lib/utils";
+import { formatValuation, StartupTags } from "@/lib/utils";
 import { useNavigate } from "react-router-dom";
+import { InvestorDetailsType } from "@/lib/investor-type";
+import useUserStore from "@/store/id";
+import axios from "axios";
+import { StartupDetailsType } from "@/lib/startup-type";
 
 const startups = [
     {
@@ -35,14 +39,14 @@ const startups = [
         sales: 100000,
         last_round_valuation: 1000000,
         funding_round: "Seed",
-        tags: [ "AI", "Fintech", "Healthcare", "Analytics"],
+        tags: ["AI", "Fintech", "Healthcare", "Analytics"],
     },
     {
         name: "Startup 2",
         sales: 200000,
         last_round_valuation: 2000000,
         funding_round: "Series A",
-        tags: [ "AI", "Fintech", "Healthcare", "Analytics"],
+        tags: ["AI", "Fintech", "Healthcare", "Analytics"],
     },
     {
         name: "Startup 3",
@@ -54,20 +58,41 @@ const startups = [
 ];
 
 const Startups = () => {
+    const { id } = useUserStore();
+    
+
+    const [startups, setStartups] = useState<StartupDetailsType[]>([]);
+    const [isLoading, setLoading] = useState(true);
+    useEffect(() => {
+        async function current() {
+            await axios
+                .post("http://localhost:5000/recommend-startups", {
+                    investor_id: id,
+                })
+                .then((res) => {
+                    console.log(res.data);
+                    setStartups(res.data.startups);
+                    setLoading(false);
+                });
+        }
+        current();
+    },[id]);
+
     const [searchTerm, setSearchTerm] = useState("");
     const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
     const navigate = useNavigate();
 
     const filteredStartups = startups.filter((startup) => {
-        const matchesSearch =
-            startup.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            startup.tags.some((domain) =>
-                domain.toLowerCase().includes(searchTerm.toLowerCase())
-            );
-        const matchesType =
-            selectedTypes.length === 0 ||
-            selectedTypes.includes(startup.funding_round);
-        return matchesSearch && matchesType;
+        const matchesSearch = startup.name
+            .toLowerCase()
+            .includes(searchTerm.toLowerCase());
+        //     startup.tags.some((domain) =>
+        //         domain.toLowerCase().includes(searchTerm.toLowerCase())
+        //     );
+        // const matchesType =
+        //     selectedTypes.length === 0 ||
+        //     selectedTypes.includes(startup.funding_round);
+        return matchesSearch;
     });
 
     return (
@@ -145,9 +170,7 @@ const Startups = () => {
                                         className="cursor-pointer"
                                         onClick={() =>
                                             navigate(
-                                                `/investor/startup/${startup.name
-                                                    .toLowerCase()
-                                                    .replace(/ /g, "-")}`
+                                                `/investor/startup/${startup.startupid}`
                                             )
                                         }
                                     >
@@ -155,25 +178,24 @@ const Startups = () => {
                                             {startup.name}
                                         </TableCell>
                                         <TableCell>
-                                            ${startup.sales.toLocaleString()}
+                                            $
+                                            {startup.yearly_sales.toLocaleString()}
                                         </TableCell>
                                         <TableCell>
                                             $
-                                            {startup.last_round_valuation.toLocaleString()}
+                                            {formatValuation(startup.estimated_valuation.toLocaleString())}
                                         </TableCell>
                                         <TableCell>
-                                            {startup.funding_round}
+                                            {startup.funding_stage}
                                         </TableCell>
                                         <TableCell>
                                             <div className="flex flex-wrap gap-1">
-                                                {startup.tags.map((domain) => (
-                                                    <span
-                                                        key={domain}
-                                                        className="inline-flex items-center rounded-full bg-blue-100 px-2.5 py-0.5 text-xs font-medium text-blue-800"
-                                                    >
-                                                        {domain}
-                                                    </span>
-                                                ))}
+                                                <span
+                                                    key={startup.domain}
+                                                    className="inline-flex items-center rounded-full bg-blue-100 px-2.5 py-0.5 text-xs font-medium text-blue-800"
+                                                >
+                                                    {startup.domain}
+                                                </span>
                                             </div>
                                         </TableCell>
                                     </TableRow>

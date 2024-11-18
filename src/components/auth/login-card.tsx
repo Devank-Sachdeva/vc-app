@@ -18,13 +18,15 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import axios from "axios";
 import useUserStore from "@/store/id";
 import useStartupStore from "@/store/startup";
+import { useToast } from "../hooks/use-toast";
+import useInvestorStore from "@/store/investor";
 
 const loginSchema = z.object({
     userType: z.enum(["startup", "investor"], {
         required_error: "You must select a user type",
     }),
-    email: z.string().email("Invalid email address"),
-    password: z.string().min(8, "Password must be at least 8 characters"),
+    username: z.string().min(6, "Invalid username address"),
+    password: z.string().min(6, "Password must be at least 8 characters"),
 });
 
 type LoginFormValues = z.infer<typeof loginSchema>;
@@ -32,6 +34,7 @@ type LoginFormValues = z.infer<typeof loginSchema>;
 export const LoginCard = () => {
     const [isLoading, setIsLoading] = useState(false);
     const { setStartupDetails } = useStartupStore();
+    const { setInvestorDetails } = useInvestorStore();
     const navigate = useNavigate();
 
     const { setId, setUser } = useUserStore();
@@ -54,11 +57,17 @@ export const LoginCard = () => {
     } = useForm<LoginFormValues>({
         resolver: zodResolver(loginSchema),
         defaultValues: {
-            userType: "startup",
-            email: "test@gmail.com",
-            password: "password123",
+            userType: "investor",
+            username: "user1@example.com",
+            password: "password1",
         },
+        // defaultValues: {
+        //     userType: "startup",
+        //     username: "user001",
+        //     password: "pass001",
+        // },
     });
+    const { toast } = useToast();
     const onSubmit = async (data: LoginFormValues) => {
         setIsLoading(true);
         // Here you would typically send the data to your backend
@@ -67,38 +76,58 @@ export const LoginCard = () => {
         if (data.userType === "startup") {
             await axios
                 .post("http://localhost:5000/startup-login", {
-                    username: data.email,
+                    username: data.username,
                     password: data.password,
                 })
                 .then(async (response) => {
                     setId(response.data.startup_id);
-                    setUser(response.data.user);
+                    setUser("startup");
 
                     await axios
                         .post("http://localhost:5000/startup-details", {
                             startup_id: response.data.startup_id,
                         })
-                        .then((res) => setStartupDetails(res.data));
+                        .then((res) => {
+                            setStartupDetails(res.data);
+                            navigate(`/startup/dashboard`);
+                        });
+                })
+                .catch(() => {
+                    toast({
+                        title: "Invalid Credentials",
+                        description: "Invalid username or password",
+                        variant: "destructive",
+                    });
                 });
         } else {
             await axios
                 .post("http://localhost:5000/investor-login", {
-                    username: data.email,
+                    username: data.username,
                     password: data.password,
                 })
                 .then(async (response) => {
-                    setId(response.data.startup_id);
-                    setUser(response.data.user);
+                    setId(response.data.investor_id);
+                    setUser("investor");
 
                     await axios
                         .post("http://localhost:5000/investor-details", {
                             investor_id: response.data.investor_id,
                         })
-                        .then((res) => setStartupDetails(res.data));
+                        .then((res) => {
+                            setInvestorDetails(res.data.investor_details);
+                            navigate(`/investor/dashboard`);
+                        });
+                })
+                .catch((error) => {
+                    console.log(error);
+                    toast({
+                        title: "Invalid Credentials",
+                        description: "Invalid username or password",
+                        variant: "destructive",
+                    });
                 });
         }
         setIsLoading(false);
-        navigate(`/${data.userType}/dashboard`);
     };
 
     return (
@@ -106,7 +135,7 @@ export const LoginCard = () => {
             <CardHeader>
                 <CardTitle className="text-2xl text-center">Login</CardTitle>
                 <CardDescription className="text-center pt-1">
-                    Enter your email below to login to your account
+                    Enter your username below to login to your account
                 </CardDescription>
             </CardHeader>
             <CardContent>
@@ -115,7 +144,7 @@ export const LoginCard = () => {
                         <div className="flex flex-col space-y-1.5">
                             <Label>I am a</Label>
                             <RadioGroup
-                                defaultValue="startup"
+                                defaultValue="investor"
                                 className="flex space-x-4"
                                 onValueChange={(data) =>
                                     data === "startup"
@@ -147,16 +176,16 @@ export const LoginCard = () => {
                             )}
                         </div>
                         <div className="grid gap-2">
-                            <Label htmlFor="email">Email</Label>
+                            <Label htmlFor="username">username</Label>
                             <Input
-                                id="email"
-                                type="email"
+                                id="username"
+                                type="username"
                                 placeholder="m@example.com"
-                                {...register("email")}
+                                {...register("username")}
                             />
-                            {errors.email && (
+                            {errors.username && (
                                 <p className="text-xs text-red-500">
-                                    {errors.email.message}
+                                    {errors.username.message}
                                 </p>
                             )}
                         </div>
