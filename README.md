@@ -1,50 +1,18 @@
-# React + TypeScript + Vite
+STARTUP DASHBOARD
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![image](https://github.com/user-attachments/assets/6573612a-8e2a-44f0-bfea-a269cfa5e7d1)
 
-Currently, two official plugins are available:
+INVESTOR DASHBOARD
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+![image](https://github.com/user-attachments/assets/d58287f3-a202-4fdf-b07b-70003e2ef9a7)
 
-## Expanding the ESLint configuration
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+STARTUP PROFILE 
 
-- Configure the top-level `parserOptions` property like this:
+![image](https://github.com/user-attachments/assets/e3d4f659-40cb-4c10-8ff5-7f5620665fd0)
+![image](https://github.com/user-attachments/assets/a73c9666-41a3-4681-bfd7-faaf51382f8c)
+![image](https://github.com/user-attachments/assets/2d8ab6ee-ff41-4c97-b3ed-208ffc5f638b)
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+INVESTOR PROFILE 
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+![image](https://github.com/user-attachments/assets/be486701-61e2-4fd6-b565-321cb71d56a7)
